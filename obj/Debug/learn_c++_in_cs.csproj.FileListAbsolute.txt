@@ -1,0 +1,26 @@
+D:\Prog\C#\learn_c++_in_cs\bin\Debug\learn_c++_in_cs.exe.config
+D:\Prog\C#\learn_c++_in_cs\bin\Debug\learn_c++_in_cs.exe
+D:\Prog\C#\learn_c++_in_cs\bin\Debug\learn_c++_in_cs.pdb
+D:\Prog\C#\learn_c++_in_cs\obj\Debug\learn_c___in_cs.MainForm.resources
+D:\Prog\C#\learn_c++_in_cs\obj\Debug\learn_c___in_cs.Properties.Resources.resources
+D:\Prog\C#\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.csproj.GenerateResource.cache
+D:\Prog\C#\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.csproj.CoreCompileInputs.cache
+D:\Prog\C#\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.exe
+D:\Prog\C#\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.pdb
+D:\Prog\C#\learn_c++_in_cs\bin\Debug\System.Numerics.Vectors.dll
+D:\Prog\C#\learn_c++_in_cs\bin\Debug\System.Numerics.Vectors.xml
+D:\Prog\C#\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.csproj.CopyComplete
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\bin\Debug\learn_c++_in_cs.exe.config
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\bin\Debug\learn_c++_in_cs.exe
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\bin\Debug\learn_c++_in_cs.pdb
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.csprojAssemblyReference.cache
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\obj\Debug\learn_c___in_cs.MainForm.resources
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\obj\Debug\learn_c___in_cs.Properties.Resources.resources
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.csproj.GenerateResource.cache
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.csproj.CoreCompileInputs.cache
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.csproj.CopyComplete
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.exe
+C:\Users\arndr\Downloads\learn_c_in_cs (1)\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.pdb
+D:\Prog\C#\learn_c++_in_cs\obj\Debug\learn_c++_in_cs.csprojAssemblyReference.cache
