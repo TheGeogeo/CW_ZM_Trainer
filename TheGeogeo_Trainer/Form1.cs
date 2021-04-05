@@ -12,7 +12,6 @@ namespace learn_c___in_cs
 
     using cw;
     using System.Text;
-    using System.Threading.Tasks;
 
     public partial class MainForm : Form
     {
@@ -28,6 +27,12 @@ namespace learn_c___in_cs
         Thread freeze1T;
         Thread freeze2T;
         Thread freeze3T;
+
+        public IntPtr PlayerBase = (IntPtr)0x1049CEA0;
+        public IntPtr CMDBufferBase = (IntPtr)0x11C8A390;
+        public IntPtr XPScaleBase = (IntPtr)0x109E4E18; //instant ban depuis la version 1.8.0
+        //public IntPtr TimeScaleBase = (IntPtr)0xFB85514;
+        public string currentVersion = "Work in 1.10.2";
 
         public int gamePID = 0;
         public IntPtr hProc;
@@ -45,13 +50,7 @@ namespace learn_c___in_cs
         public Vector3 zombieTpPos;
         public bool uneFois = true;
         public Single TimesModifier = 1.0f;
-        public byte tempCritKill;
         public int ZLeft = 0;
-
-        public IntPtr PlayerBase = (IntPtr)0x10888578;
-        public IntPtr CMDBufferBase = (IntPtr)0x120ECA40;
-        public IntPtr XPScaleBase = (IntPtr)0x10494470; //instant ban depuis la version 1.8.0
-        //public IntPtr TimeScaleBase = (IntPtr)0xFB85514;
 
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
@@ -75,7 +74,7 @@ namespace learn_c___in_cs
         public const int PC_Coords = 0xDE8; // writeable only
 
         public const int KillCount = 0x5CE8;
-        public const int CritKill8 = 0x10D6;
+        public const int CritKill8 = 0x10DA;   // 0x10D6 1.9.9
 
         public const int PP_ArraySize_Offset = 0x5F8;
 
@@ -170,8 +169,7 @@ namespace learn_c___in_cs
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            consoleOut("By TheGeogeo#2845");
-            consoleOut("WORK IN 1.9.3");
+            consoleOut(currentVersion);
             tpZombiT = new Thread(TpZombie) { IsBackground = true };
             tpZombiT.Start();
             if (!backgroundWorker1.IsBusy) backgroundWorker1.RunWorkerAsync();
@@ -390,25 +388,23 @@ namespace learn_c___in_cs
 
                     if (critKillCheck.Checked | allCritKill.Checked)
                     {
-                        tempCritKill = 255;
                         if (critKillCheck.Checked)
                         {
-                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + CritKill8, tempCritKill, 1, out _);
+                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + CritKill8, -1, 1, out _);
                         }
                         if (allCritKill.Checked)
                         {
                             for (int i = 0; i < 4; i++)
                             {
-                                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + CritKill8, tempCritKill, 1, out _);
+                                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + CritKill8, -1, 1, out _);
                             }
                         }
                     }
                     else
                     {
-                        tempCritKill = 0;
                         for (int i = 0; i < 4; i++)
                         {
-                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + CritKill8, tempCritKill, 1, out _);
+                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + CritKill8, 0, 1, out _);
                         }
                     }
 

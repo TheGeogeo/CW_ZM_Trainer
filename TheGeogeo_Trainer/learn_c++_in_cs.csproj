@@ -7,7 +7,7 @@
     <ProjectGuid>{5E15D392-3331-4175-B04E-BF3DEBA77766}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>learn_c___in_cs</RootNamespace>
-    <AssemblyName>learn_c++_in_cs</AssemblyName>
+    <AssemblyName>learn_c___in_cs</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -93,6 +93,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
     <None Include="packages.config" />
