@@ -94,6 +94,8 @@ namespace learn_c___in_cs
             this.changeWPP2 = new System.Windows.Forms.Button();
             this.wpP2Text = new System.Windows.Forms.TextBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.topMostButton = new System.Windows.Forms.CheckBox();
+            this.reviveFarBtn = new System.Windows.Forms.Button();
             this.freezeBoxCheck = new System.Windows.Forms.CheckBox();
             this.instantSartBtn = new System.Windows.Forms.Button();
             this.endAnyLobbyBtn = new System.Windows.Forms.Button();
@@ -103,7 +105,6 @@ namespace learn_c___in_cs
             this.label3 = new System.Windows.Forms.Label();
             this.zombieLeftLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.reviveFarBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.moveSpeedTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xpPlayerBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xpWeaponBar)).BeginInit();
@@ -877,6 +878,7 @@ namespace learn_c___in_cs
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.topMostButton);
             this.groupBox8.Controls.Add(this.reviveFarBtn);
             this.groupBox8.Controls.Add(this.freezeBoxCheck);
             this.groupBox8.Controls.Add(this.instantSartBtn);
@@ -893,6 +895,29 @@ namespace learn_c___in_cs
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "MISC";
+            // 
+            // topMostButton
+            // 
+            this.topMostButton.AutoSize = true;
+            this.topMostButton.Location = new System.Drawing.Point(379, 106);
+            this.topMostButton.Name = "topMostButton";
+            this.topMostButton.Size = new System.Drawing.Size(196, 19);
+            this.topMostButton.TabIndex = 12;
+            this.topMostButton.Text = "Cheat always top of windows";
+            this.topMostButton.UseVisualStyleBackColor = true;
+            this.topMostButton.CheckedChanged += new System.EventHandler(this.topMostButton_CheckedChanged);
+            // 
+            // reviveFarBtn
+            // 
+            this.reviveFarBtn.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.reviveFarBtn.Enabled = false;
+            this.reviveFarBtn.Location = new System.Drawing.Point(6, 106);
+            this.reviveFarBtn.Name = "reviveFarBtn";
+            this.reviveFarBtn.Size = new System.Drawing.Size(151, 23);
+            this.reviveFarBtn.TabIndex = 11;
+            this.reviveFarBtn.Text = "Revive far (HOST)";
+            this.reviveFarBtn.UseVisualStyleBackColor = false;
+            this.reviveFarBtn.Click += new System.EventHandler(this.reviveFarBtn_Click);
             // 
             // freezeBoxCheck
             // 
@@ -983,18 +1008,6 @@ namespace learn_c___in_cs
             this.label1.Size = new System.Drawing.Size(82, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "Zombie left : ";
-            // 
-            // reviveFarBtn
-            // 
-            this.reviveFarBtn.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.reviveFarBtn.Enabled = false;
-            this.reviveFarBtn.Location = new System.Drawing.Point(6, 106);
-            this.reviveFarBtn.Name = "reviveFarBtn";
-            this.reviveFarBtn.Size = new System.Drawing.Size(151, 23);
-            this.reviveFarBtn.TabIndex = 11;
-            this.reviveFarBtn.Text = "Revive far (HOST)";
-            this.reviveFarBtn.UseVisualStyleBackColor = false;
-            this.reviveFarBtn.Click += new System.EventHandler(this.reviveFarBtn_Click);
             // 
             // MainForm
             // 
@@ -1120,6 +1133,7 @@ namespace learn_c___in_cs
         private System.Windows.Forms.CheckBox freeze2Check;
         private System.Windows.Forms.CheckBox freeze1Check;
         private System.Windows.Forms.Button reviveFarBtn;
+        private System.Windows.Forms.CheckBox topMostButton;
     }
 }
 

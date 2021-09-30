@@ -30,9 +30,9 @@ namespace learn_c___in_cs
 
         public IntPtr PlayerBase = (IntPtr)0x1049CEA0;
         public IntPtr CMDBufferBase = (IntPtr)0x11C8A390;
-        public IntPtr XPScaleBase = (IntPtr)0x109E4E18; //instant ban depuis la version 1.8.0
+        public IntPtr XPScaleBase = (IntPtr)0x109E4E18; //instant since 1.8.0
         //public IntPtr TimeScaleBase = (IntPtr)0xFB85514;
-        public string currentVersion = "Work in 1.10.2";
+        public string currentVersion = "Work in ...";
 
         public int gamePID = 0;
         public IntPtr hProc;
@@ -943,6 +943,18 @@ namespace learn_c___in_cs
             for (int i = 0; i < 3; i++)
             {
                 CmdBufferExec("revive_trigger_radius 99999");
+            }
+        }
+
+        private void topMostButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (topMostButton.Checked)
+            {
+                TopMost = true;
+            }
+            else
+            {
+                TopMost = true;
             }
         }
 
