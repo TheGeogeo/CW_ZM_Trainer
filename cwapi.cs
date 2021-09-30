@@ -5,8 +5,6 @@ using System.Windows.Forms;
 
 namespace cw
 {
-    // this is all practically copy-pasted from a Guided Hacking tutorial lol, dont think i've made any changes to it but it works
-
     internal class cwapi
     {
         [Flags]
