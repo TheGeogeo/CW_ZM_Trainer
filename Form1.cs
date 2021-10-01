@@ -34,28 +34,6 @@ namespace learn_c___in_cs
         public IntPtr CMDBufferBase = (IntPtr)0xD4C97B0; //adress update 1.17.6
         public IntPtr XPScaleBase = (IntPtr)0x10F66F98; //adress update 1.17.6
 
-        //-----------------------------------------------------------------------------------------------------------------------
-
-        public string currentVersion = "Work in ...";
-
-        public int gamePID = 0;
-        public IntPtr hProc;
-        public IntPtr baseAddress = IntPtr.Zero;
-        public Color defaultColor = Color.Black;
-        public bool isrunning = false;
-        public Process gameProc;
-        public Single playerSpeed = -1f;
-        public bool ammoFrozen;
-        public int[] ammoVals = new int[6];
-        public int[] maxAmmoVals = new int[6];
-        public Vector3 frozenPlayerPos = Vector3.Zero;
-        public Vector3 lastKnownPlayerPos = Vector3.Zero;
-        public Vector3 updatedPlayerPos = Vector3.Zero;
-        public Vector3 zombieTpPos;
-        public bool uneFois = true;
-        public Single TimesModifier = 1.0f;
-        public int ZLeft = 0;
-
         //----------------------------------------------Offset last update 1.17.6--------------------------------------------------
 
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
@@ -103,6 +81,26 @@ namespace learn_c___in_cs
         public const int ZM_Bot_Coords = 0x2D4;
 
         //-----------------------------------------------------------------------------------------------------------------------
+
+        public string currentVersion = "Work in ...";
+
+        public int gamePID = 0;
+        public IntPtr hProc;
+        public IntPtr baseAddress = IntPtr.Zero;
+        public Color defaultColor = Color.Black;
+        public bool isrunning = false;
+        public Process gameProc;
+        public Single playerSpeed = -1f;
+        public bool ammoFrozen;
+        public int[] ammoVals = new int[6];
+        public int[] maxAmmoVals = new int[6];
+        public Vector3 frozenPlayerPos = Vector3.Zero;
+        public Vector3 lastKnownPlayerPos = Vector3.Zero;
+        public Vector3 updatedPlayerPos = Vector3.Zero;
+        public Vector3 zombieTpPos;
+        public bool uneFois = true;
+        public Single TimesModifier = 1.0f;
+        public int ZLeft = 0;
 
         public void consoleOut(string str)
         {
