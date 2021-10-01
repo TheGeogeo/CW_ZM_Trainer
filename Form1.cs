@@ -105,8 +105,11 @@ namespace learn_c___in_cs
 
         public void consoleOut(string str)
         {
-            logsText.AppendText(str);
-            logsText.AppendText(Environment.NewLine);
+            logsText.Invoke(new MethodInvoker(delegate
+            {
+                logsText.AppendText(str);
+                logsText.AppendText(Environment.NewLine);
+            }));
         }
         private void godmodCheck_CheckedChanged(object sender, EventArgs e)
         {
