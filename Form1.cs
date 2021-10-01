@@ -56,14 +56,15 @@ namespace learn_c___in_cs
         public Single TimesModifier = 1.0f;
         public int ZLeft = 0;
 
-        //----------------------------------------------Offset last update 1.10--------------------------------------------------
+        //----------------------------------------------Offset last update 1.17.6--------------------------------------------------
 
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
         public const int PlayerXP = 0x20;
-        public const int PlayerXP2 = 0x30;
+        public const int PlayerXP2 = 0x28;
+        public const int WeaponXP = 0x30;
 
-        public const int PC_ArraySize_Offset = 0xB940;
+        public const int PC_ArraySize_Offset = 0xB970;
         public const int PC_CurrentUsedWeaponID = 0x28;
         public const int PC_SetWeaponID = 0xB0; // +(1-5 * 0x40 for WP2 to WP6)
         public const int PC_InfraredVision = 0xE66; // (byte) On=0x10|Off=0x0
@@ -72,8 +73,8 @@ namespace learn_c___in_cs
         public const int PC_RapidFire2 = 0xE80;
         public const int PC_MaxAmmo = 0x1360; // +(1-5 * 0x8 for WP1 to WP6)
         public const int PC_Ammo = 0x13D4; // +(1-5 * 0x4 for WP1 to WP6)
-        public const int PC_Points = 0x5D14;
-        public const int PC_Name = 0x5C0A;
+        public const int PC_Points = 0x5D24;
+        public const int PC_Name = 0x605C;
         public const int PC_RunSpeed = 0x5C60;
         public const int PC_ClanTags = 0x605C;
         public const int PC_autoFire = 0xE70;
@@ -95,9 +96,9 @@ namespace learn_c___in_cs
 
         public const int ZM_Bot_List_Offset = 0x8;
 
-        public const int ZM_Bot_ArraySize_Offset = 0x5F8;
+        public const int ZM_Bot_ArraySize_Offset = 0x5E8;
 
-        public const int ZM_Bot_Health = 0x398;
+        public const int ZM_Bot_Health = 0x390;
         public const int ZM_Bot_MaxHealth = 0x39C;
         public const int ZM_Bot_Coords = 0x2D4;
 
