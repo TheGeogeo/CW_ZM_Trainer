@@ -28,10 +28,10 @@ namespace learn_c___in_cs
         Thread freeze2T;
         Thread freeze3T;
 
-        public IntPtr PlayerBase = (IntPtr)0x1049CEA0;
-        public IntPtr CMDBufferBase = (IntPtr)0x11C8A390;
-        public IntPtr XPScaleBase = (IntPtr)0x109E4E18; //instant since 1.8.0
-        //public IntPtr TimeScaleBase = (IntPtr)0xFB85514;
+        public IntPtr PlayerBase = (IntPtr)0x10F36FA8; //G_Client / adress update 1.17.6
+        public IntPtr CMDBufferBase = (IntPtr)0xD4C97B0; //adress update 1.17.6
+        public IntPtr XPScaleBase = (IntPtr)0x10F66F98; //adress update 1.17.6
+
         public string currentVersion = "Work in ...";
 
         public int gamePID = 0;
