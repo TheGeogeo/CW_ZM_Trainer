@@ -1,10 +1,10 @@
 # CW_ZM_Trainer
 
-My thread : https://bit.ly/3onAYhe
+My thread : https://www.unknowncheats.me/forum/call-of-duty-black-ops-cold-war/443043-trainer-cw-zm.html
 
-If you don't know how get main adress look the main thread: https://bit.ly/3a8nNbL
+If you don't know how get main adress look the main thread: https://www.unknowncheats.me/forum/call-of-duty-black-ops-cold-war/421778-call-duty-black-ops-cold-war-reversal-structs-offsets.html
 
-or look this : https://bit.ly/3onzMKM
+or look this : https://www.unknowncheats.me/forum/call-of-duty-black-ops-cold-war/460931-cw-update-offset-aobscan-ce.html
 
 If you need some help for edit something > TheGeogeo#2719
 
