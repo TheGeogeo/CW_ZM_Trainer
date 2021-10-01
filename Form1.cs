@@ -56,6 +56,8 @@ namespace learn_c___in_cs
         public Single TimesModifier = 1.0f;
         public int ZLeft = 0;
 
+        //----------------------------------------------Offset last update 1.10--------------------------------------------------
+
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
         public const int PlayerXP = 0x20;
@@ -98,6 +100,8 @@ namespace learn_c___in_cs
         public const int ZM_Bot_Health = 0x398;
         public const int ZM_Bot_MaxHealth = 0x39C;
         public const int ZM_Bot_Coords = 0x2D4;
+
+        //-----------------------------------------------------------------------------------------------------------------------
 
         public void consoleOut(string str)
         {
