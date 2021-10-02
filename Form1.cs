@@ -30,9 +30,9 @@ namespace learn_c___in_cs
 
         //--------------------------------------------You just need this 3 adress------------------------------------------------
 
-        public IntPtr PlayerBase = (IntPtr)0x10F36FA8; //G_Client / adress update 1.17.6
-        public IntPtr CMDBufferBase = (IntPtr)0xD4C97B0; //adress update 1.17.6
-        public IntPtr XPScaleBase = (IntPtr)0x10F66F98; //adress update 1.17.6
+        public IntPtr PlayerBase = (IntPtr)0x114F9CA8; //G_Client / adress update 1.17.7
+        public IntPtr CMDBufferBase = (IntPtr)0xDA9D7D0; //adress update 1.17.7
+        public IntPtr XPScaleBase = (IntPtr)0x11529C98; //adress update 1.17.7
 
         //----------------------------------------------Offset last update 1.17.6--------------------------------------------------
 
