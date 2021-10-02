@@ -34,7 +34,7 @@ namespace learn_c___in_cs
         public IntPtr CMDBufferBase = (IntPtr)0xDA9D7D0; //adress update 1.17.7
         public IntPtr XPScaleBase = (IntPtr)0x11529C98; //adress update 1.17.7
 
-        //----------------------------------------------Offset last update 1.17.6--------------------------------------------------
+        //----------------------------------------------Offset last update 1.17.7--------------------------------------------------
 
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
