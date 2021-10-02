@@ -28,13 +28,14 @@ namespace learn_c___in_cs
         Thread freeze2T;
         Thread freeze3T;
 
-        //--------------------------------------------You just need this 3 adress------------------------------------------------
+        //-------------------------------------------------Adress update 1.17.7----------------------------------------------------
 
-        public IntPtr PlayerBase = (IntPtr)0x114F9CA8; //G_Client / adress update 1.17.7
-        public IntPtr CMDBufferBase = (IntPtr)0xDA9D7D0; //adress update 1.17.7
-        public IntPtr XPScaleBase = (IntPtr)0x11529C98; //adress update 1.17.7
+        public IntPtr PlayerBase = (IntPtr)0x114F9CA8; //G_Client
+        public IntPtr CMDBufferBase = (IntPtr)0xDA9D7D0; 
+        public IntPtr XPScaleBase = (IntPtr)0x11529C98; 
 
-        //----------------------------------------------Offset last update 1.17.7--------------------------------------------------
+        //--------------------------------------------------------Offset------------------------------------------------------------
+        // If after change adress your game crash it's because offset change probably
 
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
