@@ -61,7 +61,7 @@ namespace learn_c___in_cs
         public const int KillCount = 0x5CE8;
         public const int CritKill8 = 0x10DA;   // 0x10D6 1.9.9
 
-        public const int PP_ArraySize_Offset = 0x5F8;
+        public const int PP_ArraySize_Offset = 0x5E8; // maybe 0x5F8
 
         public const int PP_Health = 0x398;
         public const int PP_MaxHealth = 0x39C;
