@@ -2,16 +2,14 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Numerics;
 using System.Threading;
+using System.Text;
+using cw;
 
 namespace learn_c___in_cs
 {
-
-    using cw;
-    using System.Text;
 
     public partial class MainForm : Form
     {
@@ -28,80 +26,36 @@ namespace learn_c___in_cs
         Thread freeze2T;
         Thread freeze3T;
 
-        //-------------------------------------------------Adress update 1.17.7----------------------------------------------------
-
-        public IntPtr PlayerBase = (IntPtr)0x114F9CA8; //G_Client
-        public IntPtr CMDBufferBase = (IntPtr)0xDA9D7D0; 
-        public IntPtr XPScaleBase = (IntPtr)0x11529C98; 
-
-        //--------------------------------------------------------Offset------------------------------------------------------------
-        // If after change adress your game crash it's because offset change probably
-
-        public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
-
-        public const int PlayerXP = 0x20;
-        public const int PlayerXP2 = 0x28;
-        public const int WeaponXP = 0x30;
-
-        public const int PC_ArraySize_Offset = 0xB970;
-        public const int PC_CurrentUsedWeaponID = 0x28;
-        public const int PC_SetWeaponID = 0xB0; // +(1-5 * 0x40 for WP2 to WP6)
-        public const int PC_InfraredVision = 0xE66; // (byte) On=0x10|Off=0x0
-        public const int PC_GodMode = 0xE67; // (byte) On=0xA0|Off=0x20
-        public const int PC_RapidFire1 = 0xE6C;
-        public const int PC_RapidFire2 = 0xE80;
-        public const int PC_MaxAmmo = 0x1360; // +(1-5 * 0x8 for WP1 to WP6)
-        public const int PC_Ammo = 0x13D4; // +(1-5 * 0x4 for WP1 to WP6)
-        public const int PC_Points = 0x5D24;
-        public const int PC_Name = 0x605C;
-        public const int PC_RunSpeed = 0x5C70;
-        public const int PC_ClanTags = 0x605C;
-        public const int PC_autoFire = 0xE70;
-        public const int PC_Coords = 0xDE8; // writeable only
-
-        public const int KillCount = 0x5CE8;
-        public const int CritKill8 = 0x10DA;   // 0x10D6 1.9.9
-
-        public const int PP_ArraySize_Offset = 0x5E8; // maybe 0x5F8
-
-        public const int PP_Health = 0x398;
-        public const int PP_MaxHealth = 0x39C;
-        public const int PP_Coords = 0x2D4; // read only
-        public const int PP_Heading_Z = 0x34;
-        public const int PP_Heading_XY = 0x38;
-
-        public const int ZM_Global_MovedOffset = 0x0;
-        public const int ZM_Global_ZombiesIgnoreAll = 0x14;
-
-        public const int ZM_Bot_List_Offset = 0x8;
-
-        public const int ZM_Bot_ArraySize_Offset = 0x5E8;
-
-        public const int ZM_Bot_Health = 0x390;
-        public const int ZM_Bot_MaxHealth = 0x39C;
-        public const int ZM_Bot_Coords = 0x2D4;
 
         //-----------------------------------------------------------------------------------------------------------------------
+
+        public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
         public string currentVersion = "Work in ...";
 
         public int gamePID = 0;
         public IntPtr hProc;
         public IntPtr baseAddress = IntPtr.Zero;
+        public Process gameProc;
+
         public Color defaultColor = Color.Black;
         public bool isrunning = false;
-        public Process gameProc;
-        public Single playerSpeed = -1f;
         public bool ammoFrozen;
-        public int[] ammoVals = new int[6];
-        public int[] maxAmmoVals = new int[6];
+        public bool uneFois = true;
+
+        public Single playerSpeed = -1f;
+
         public Vector3 frozenPlayerPos = Vector3.Zero;
         public Vector3 lastKnownPlayerPos = Vector3.Zero;
         public Vector3 updatedPlayerPos = Vector3.Zero;
         public Vector3 zombieTpPos;
-        public bool uneFois = true;
-        public Single TimesModifier = 1.0f;
+
+        public int[] ammoVals = new int[6];
+        public int[] maxAmmoVals = new int[6];
         public int ZLeft = 0;
+
+        public Single TimesModifier = 1.0f;
+
 
         public void consoleOut(string str)
         {
@@ -111,6 +65,30 @@ namespace learn_c___in_cs
                 logsText.AppendText(Environment.NewLine);
             }));
         }
+        public void UpdateTextBox(TextBox textbox,string str)
+        {
+            textbox.Invoke(new MethodInvoker(delegate
+            {
+                textbox.Clear();
+                textbox.AppendText(str);
+            }));
+        }
+
+        public void UpdateLabel(Label label, string text, string color = "Black")
+        {
+            if (this.InvokeRequired)
+            {
+                label.Invoke((MethodInvoker)delegate ()
+                {
+                    label.Text = text;
+                    label.ForeColor = Color.FromName(color);
+                });
+                return;
+            }
+            label.Text = text;
+            label.ForeColor = Color.FromName(color);
+        }
+
         private void godmodCheck_CheckedChanged(object sender, EventArgs e)
         {
             if (godmodCheck.Checked)
@@ -162,7 +140,7 @@ namespace learn_c___in_cs
             moveSpeedLabel.Text = moveSpeedTrackBar.Value.ToString();
 
             playerSpeed = moveSpeedTrackBar.Value;
-            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_RunSpeed, Convert.ToSingle(playerSpeed), 4, out _);
+            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_RunSpeed, Convert.ToSingle(playerSpeed), 4, out _);
         }
 
         private void instaKillCheck_CheckedChanged(object sender, EventArgs e)
@@ -186,32 +164,19 @@ namespace learn_c___in_cs
             if (!backgroundWorker1.IsBusy) backgroundWorker1.RunWorkerAsync();
         }
 
-        public void UpdateLabel(Label label, string text, string color = "Black")
-        {
-            if (this.InvokeRequired)
-            {
-                label.Invoke((MethodInvoker)delegate ()
-                {
-                    label.Text = text;
-                    label.ForeColor = Color.FromName(color);
-                });
-                return;
-            }
-            label.Text = text;
-            label.ForeColor = Color.FromName(color);
-        }
+
 
         private void thermalScopeCheck_CheckedChanged(object sender, EventArgs e)
         {
             if (thermalScopeCheck.Checked)
             {
-                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_InfraredVision, 0x10, 1, out _);
+                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_InfraredVision, 0x10, 1, out _);
                 logsText.AppendText("THERMAL SCOPE ON (reset if escaping)");
                 logsText.AppendText(Environment.NewLine);
             }
             else
             {
-                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_InfraredVision, 0x0, 1, out _);
+                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_InfraredVision, 0x0, 1, out _);
                 logsText.AppendText("THERMAL SCOPE OFF");
                 logsText.AppendText(Environment.NewLine);
             }
@@ -326,37 +291,37 @@ namespace learn_c___in_cs
                     }
 
                     // cache the base addresses for these various pointers
-                    if (PlayerCompPtr != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + PlayerBase.ToInt64()), new int[] { 0 }))
+                    if (PlayerCompPtr != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64()), new int[] { 0 }))
                     {
-                        PlayerCompPtr = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + PlayerBase.ToInt64()), new int[] { 0 });
+                        PlayerCompPtr = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64()), new int[] { 0 });
                         c++;
                         consoleOut($"Adresse catch ({c}/6)");
                     }
 
-                    if (PlayerPedPtr != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + PlayerBase.ToInt64() + 0x8), new int[] { 0 }))
+                    if (PlayerPedPtr != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x8), new int[] { 0 }))
                     {
-                        PlayerPedPtr = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + PlayerBase.ToInt64() + 0x8), new int[] { 0 });
+                        PlayerPedPtr = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x8), new int[] { 0 });
                         c++;
                         consoleOut($"Adresse catch ({c}/6)");
                     }
 
-                    if (ZMGlobalBase != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + PlayerBase.ToInt64() + 0x60), new int[] { 0 }))
+                    if (ZMGlobalBase != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x60), new int[] { 0 }))
                     {
-                        ZMGlobalBase = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + PlayerBase.ToInt64() + 0x60), new int[] { 0 });
+                        ZMGlobalBase = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x60), new int[] { 0 });
                         c++;
                         consoleOut($"Adresse catch ({c}/6)");
                     }
 
-                    if (ZMBotBase != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + PlayerBase.ToInt64() + 0x68), new int[] { 0 }))
+                    if (ZMBotBase != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x68), new int[] { 0 }))
                     {
-                        ZMBotBase = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + PlayerBase.ToInt64()) + 0x68, new int[] { 0 });
+                        ZMBotBase = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64()) + 0x68, new int[] { 0 });
                         c++;
                         consoleOut($"Adresse catch ({c}/6)");
                     }
 
-                    if (ZMBotBase != (IntPtr)0x0 && ZMBotBase != (IntPtr)0x68 && ZMBotListBase != cwapi.FindDMAAddy(hProc, ZMBotBase + ZM_Bot_List_Offset, new int[] { 0 }))
+                    if (ZMBotBase != (IntPtr)0x0 && ZMBotBase != (IntPtr)0x68 && ZMBotListBase != cwapi.FindDMAAddy(hProc, ZMBotBase + AdressOffset.ZM_Bot_List_Offset, new int[] { 0 }))
                     {
-                        ZMBotListBase = cwapi.FindDMAAddy(hProc, ZMBotBase + ZM_Bot_List_Offset, new int[] { 0 });
+                        ZMBotListBase = cwapi.FindDMAAddy(hProc, ZMBotBase + AdressOffset.ZM_Bot_List_Offset, new int[] { 0 });
                         c++;
                         consoleOut($"Adresse catch ({c}/6)");
                     }
@@ -368,7 +333,7 @@ namespace learn_c___in_cs
                     }
 
                     byte[] _tempBufferName = new byte[13];
-                    cwapi.ReadProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * 0) + PC_Name, _tempBufferName, 13, out _);
+                    cwapi.ReadProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * 0) + AdressOffset.PC_Name, _tempBufferName, 13, out _);
                     string _tempBufferNameString = Encoding.UTF8.GetString(_tempBufferName);
                     if (_tempBufferNameString.Equals("UnnamedPlayer"))
                     {
@@ -379,13 +344,13 @@ namespace learn_c___in_cs
                     {
                         if (godmodCheck.Checked)
                         {
-                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_GodMode, 0xA0, 1, out _);
+                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_GodMode, 0xA0, 1, out _);
                         }
                         if (godmodeAllCheck.Checked)
                         {
                             for (int i = 0; i < 4; i++)
                             {
-                                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + PC_GodMode, 0xA0, 1, out _);
+                                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.PC_GodMode, 0xA0, 1, out _);
                             }
                         }
                     }
@@ -393,7 +358,7 @@ namespace learn_c___in_cs
                     {
                         for (int i = 0; i < 4; i++)
                         {
-                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + PC_GodMode, 0x20, 1, out _);
+                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.PC_GodMode, 0x20, 1, out _);
                         }
                     }
 
@@ -401,13 +366,13 @@ namespace learn_c___in_cs
                     {
                         if (critKillCheck.Checked)
                         {
-                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + CritKill8, -1, 1, out _);
+                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.CritKill8, -1, 1, out _);
                         }
                         if (allCritKill.Checked)
                         {
                             for (int i = 0; i < 4; i++)
                             {
-                                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + CritKill8, -1, 1, out _);
+                                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.CritKill8, -1, 1, out _);
                             }
                         }
                     }
@@ -415,7 +380,7 @@ namespace learn_c___in_cs
                     {
                         for (int i = 0; i < 4; i++)
                         {
-                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + CritKill8, 0, 1, out _);
+                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.CritKill8, 0, 1, out _);
                         }
                     }
 
@@ -423,7 +388,7 @@ namespace learn_c___in_cs
                     {
                         for (int i = 1; i < 6; i++)
                         {
-                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_Ammo + (i * 0x4), 100, 4, out _);
+                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_Ammo + (i * 0x4), 100, 4, out _);
                         }
                     }
 
@@ -433,7 +398,7 @@ namespace learn_c___in_cs
                         {
                             for (int j = 1; j < 6; j++)
                             {
-                                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + PC_Ammo + (j * 0x4), 100, 4, out _);
+                                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.PC_Ammo + (j * 0x4), 100, 4, out _);
                             }
                         }
                     }
@@ -442,18 +407,18 @@ namespace learn_c___in_cs
                     {
                         for (int i = 0; i < 4; i++)
                         {
-                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + PC_Points, 8000000, 4, out _);
+                            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.PC_Points, 8000000, 4, out _);
                         }
                     }
 
                     if (moneyInfCheck.Checked)
                     {
-                        cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_Points, 8000000, 4, out _);
+                        cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_Points, 8000000, 4, out _);
                     }
 
                     if (autoFireCheck.Checked)
                     {
-                        cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_autoFire, 1, 1, out _);
+                        cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_autoFire, 1, 1, out _);
                     }
 
                     if (uneFois)
@@ -471,7 +436,7 @@ namespace learn_c___in_cs
                     for (int i = 0; i < 90; i++)
                     {
                         byte[] tempHP = new byte[4];
-                        cwapi.ReadProcessMemory(hProc, (ZMBotListBase + ZM_Bot_ArraySize_Offset * i) + ZM_Bot_MaxHealth, tempHP, 4, out _);
+                        cwapi.ReadProcessMemory(hProc, (ZMBotListBase + AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_MaxHealth, tempHP, 4, out _);
                         if (BitConverter.ToInt32(tempHP,0) > 0)
                         {
                             ZLeft++;
@@ -524,45 +489,7 @@ namespace learn_c___in_cs
                 Thread.Sleep(40);
             }
         }
-        public double ConvertToRadians(double angle)
-        {
-            return (Math.PI / 180) * angle;
-        }
-        public void RapidFire()
-        {
-            while (true)
-            {
-
-                if (rapifFirecheck.Checked && cwapi.GetAsyncKeyState(Keys.LButton) < 0)
-                {
-                    cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_RapidFire1, 0, 4, out _);
-                    cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_RapidFire2, 0, 4, out _);
-                    Thread.Sleep(10);
-                }
-                else
-                {
-                    Thread.Sleep(100);
-                }
-            }
-        }
-        public void InstaKill()
-        {
-            while (true)
-            {
-                Thread.Sleep(100);
-                for (int i = 0; i < 90; i++)
-                {
-                    cwapi.WriteProcessMemory(hProc, (ZMBotListBase + ZM_Bot_ArraySize_Offset * i) + ZM_Bot_Health, 1, (long)4, out _);
-                    byte[] tempHP = new byte[4];
-                    cwapi.ReadProcessMemory(hProc, (ZMBotListBase + ZM_Bot_ArraySize_Offset * i) + ZM_Bot_MaxHealth, tempHP, 4, out _);
-                    if (BitConverter.ToInt32(tempHP, 0) > 0)
-                    {
-                        cwapi.WriteProcessMemory(hProc, (ZMBotListBase + ZM_Bot_ArraySize_Offset * i) + ZM_Bot_MaxHealth, 1, (long)4, out _);
-                    }
-                    
-                }
-            }
-        }
+        
 
         private void tpZombiCheck_CheckedChanged(object sender, EventArgs e)
         {
@@ -657,25 +584,25 @@ namespace learn_c___in_cs
         private void changeWPP2_Click(object sender, EventArgs e)
         {
             long x = long.Parse(wpP2Text.Text);
-            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_ArraySize_Offset + PC_SetWeaponID, x, 8, out _);
+            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_ArraySize_Offset + AdressOffset.PC_SetWeaponID, x, 8, out _);
         }
 
         private void changeWPP3_Click(object sender, EventArgs e)
         {
             long x = long.Parse(wpP3Text.Text);
-            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * 2) + PC_SetWeaponID, x, 8, out _);
+            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * 2) + AdressOffset.PC_SetWeaponID, x, 8, out _);
         }
 
         private void changeWPP4_Click(object sender, EventArgs e)
         {
             long x = long.Parse(wpP4Text.Text);
-            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * 3) + PC_SetWeaponID, x, 8, out _);
+            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * 3) + AdressOffset.PC_SetWeaponID, x, 8, out _);
         }
 
         private void changeWeaponButton_Click(object sender, EventArgs e)
         {
             long x = long.Parse(setWeaponText.Text);
-            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + PC_SetWeaponID, x, 8, out _);
+            cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_SetWeaponID, x, 8, out _);
         }
 
         private void autoFireCheck_CheckedChanged(object sender, EventArgs e)
@@ -691,45 +618,7 @@ namespace learn_c___in_cs
         {
         }
 
-        public void StatPlayerGrab()
-        {
-            while (true)
-            {
-                byte[] array = new byte[12];
-                cwapi.ReadProcessMemory(this.hProc, this.PlayerPedPtr + PP_Coords, array, 12L, out _);
-                float num = BitConverter.ToSingle(array, 0);
-                float num2 = BitConverter.ToSingle(array, 4);
-                float num3 = BitConverter.ToSingle(array, 8);
-                updatedPlayerPos = new Vector3((float)Math.Round((double)num, 4), (float)Math.Round((double)num2, 4), (float)Math.Round((double)num3, 4));
-                posXLabel.Text = updatedPlayerPos.X.ToString();
-                posYLabel.Text = updatedPlayerPos.Y.ToString();
-                posZLabel.Text = updatedPlayerPos.Z.ToString();
-
-
-                for (int i = 0; i < 4; i++)
-                {
-                    byte[] _tempBuffer = new byte[100];
-                    cwapi.ReadProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * i) + PC_Name, _tempBuffer, 100, out _);
-                    string a = System.Text.Encoding.UTF8.GetString(_tempBuffer);
-                    switch (i)
-                    {
-                        case 0:
-                            player1.Text = a;
-                            break;
-                        case 1:
-                            player2.Text = a;
-                            break;
-                        case 2:
-                            player3.Text = a;
-                            break;
-                        case 3:
-                            player4.Text = a;
-                            break;
-                    }
-                    Thread.Sleep(40);
-                }
-            }
-        }
+        
 
         private void kick2_Click(object sender, EventArgs e)
         {
@@ -790,107 +679,7 @@ namespace learn_c___in_cs
             }
         }
 
-        public void CurrentWeapon()
-        {
-            while (true)
-            {
-                byte[] _tempBuffer = new byte[8];
-                cwapi.ReadProcessMemory(hProc, PlayerCompPtr + PC_CurrentUsedWeaponID, _tempBuffer, 8, out _);
-                currentWeaponText.Text = BitConverter.ToInt64(_tempBuffer, 0).ToString();
-                Thread.Sleep(200);
-            }
-        }
-        public void TpZombie()
-        {
-            byte[] enemyPosBuffer = new byte[12];
-            bool save = false;
-            while (true)
-            {
-                if (tpZombiCheck.Checked && !tpZombieSavePointCheck.Checked)
-                {
-                    // gets current player position
-                    byte[] playerHeadingXY = new byte[4];
-                    byte[] playerHeadingZ = new byte[4];
-                    cwapi.ReadProcessMemory(hProc, PlayerPedPtr + PP_Heading_XY, playerHeadingXY, 4, out _);
-                    cwapi.ReadProcessMemory(hProc, PlayerPedPtr + PP_Heading_Z, playerHeadingZ, 4, out _);
-
-                    // some stack overflow magic to get the direction the player is facing and getting a position in front of the player
-                    double pitch = -ConvertToRadians(BitConverter.ToSingle(playerHeadingZ, 0));
-                    double yaw = ConvertToRadians(BitConverter.ToSingle(playerHeadingXY, 0));
-                    float x = Convert.ToSingle(Math.Cos(yaw) * Math.Cos(pitch));
-                    float y = Convert.ToSingle(Math.Sin(yaw) * Math.Cos(pitch));
-                    float z = Convert.ToSingle(Math.Sin(pitch));
-
-                    // im guessing just a straight up BitConverter.GetBytes could have worked for writing vector3s to memory instead of this kinda messy solution
-                    var newEnemyPos = updatedPlayerPos + new Vector3(x, y, z) * distanceTPBar.Value;
-
-                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPos.X), 0, enemyPosBuffer, 0, 4);
-                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPos.Y), 0, enemyPosBuffer, 4, 4);
-                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPos.Z), 0, enemyPosBuffer, 8, 4);
-
-                    for (int i = 0; i < 90; i++)
-                    {
-                        cwapi.WriteProcessMemory(hProc, ZMBotListBase + (ZM_Bot_ArraySize_Offset * i) + ZM_Bot_Coords, enemyPosBuffer, 12, out _);
-                    }
-                }
-
-                if (!tpZombiCheck.Checked && tpZombieSavePointCheck.Checked)
-                {
-                    if (!save)
-                    {
-                        byte[] playerHeadingXY = new byte[4];
-                        byte[] playerHeadingZ = new byte[4];
-                        cwapi.ReadProcessMemory(hProc, PlayerPedPtr + PP_Heading_XY, playerHeadingXY, 4, out _);
-                        cwapi.ReadProcessMemory(hProc, PlayerPedPtr + PP_Heading_Z, playerHeadingZ, 4, out _);
-
-                        double pitch = -ConvertToRadians(BitConverter.ToSingle(playerHeadingZ, 0));
-                        double yaw = ConvertToRadians(BitConverter.ToSingle(playerHeadingXY, 0));
-                        float x = Convert.ToSingle(Math.Cos(yaw) * Math.Cos(pitch));
-                        float y = Convert.ToSingle(Math.Sin(yaw) * Math.Cos(pitch));
-                        float z = Convert.ToSingle(Math.Sin(pitch));
-
-                        zombieTpPos = updatedPlayerPos + new Vector3(x, y, z) * 150;
-
-                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.X), 0, enemyPosBuffer, 0, 4);
-                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.Y), 0, enemyPosBuffer, 4, 4);
-                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.Z), 0, enemyPosBuffer, 8, 4);
-
-                        if (cwapi.GetAsyncKeyState(Keys.RButton) < 0)
-                        {
-                            save = true;
-                        }
-
-                        for (int i = 0; i < 90; i++)
-                        {
-                            cwapi.WriteProcessMemory(hProc, ZMBotListBase + (ZM_Bot_ArraySize_Offset * i) + ZM_Bot_Coords, enemyPosBuffer, 12, out _);
-                        }
-                    }
-                    else
-                    {
-                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.X), 0, enemyPosBuffer, 0, 4);
-                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.Y), 0, enemyPosBuffer, 4, 4);
-                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.Z), 0, enemyPosBuffer, 8, 4);
-
-                        for (int i = 0; i < 90; i++)
-                        {
-                            cwapi.WriteProcessMemory(hProc, ZMBotListBase + (ZM_Bot_ArraySize_Offset * i) + ZM_Bot_Coords, enemyPosBuffer, 12, out _);
-                        }
-                    }
-                }
-
-                if (!tpZombieSavePointCheck.Checked)
-                {
-                    save = false;
-                }
-
-                if(!tpZombiCheck.Checked && !tpZombieSavePointCheck.Checked)
-                {
-                    Thread.Sleep(500);
-                } else { 
-                    Thread.Sleep(50);
-                }
-            }
-        }
+        
 
         private void cmdBufferBtn_Click(object sender, EventArgs e)
         {
@@ -969,16 +758,200 @@ namespace learn_c___in_cs
             }
         }
 
+        public double ConvertToRadians(double angle)
+        {
+            return (Math.PI / 180) * angle;
+        }
+        public void RapidFire()
+        {
+            while (true)
+            {
+
+                if (rapifFirecheck.Checked && cwapi.GetAsyncKeyState(Keys.LButton) < 0)
+                {
+                    cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_RapidFire1, 0, 4, out _);
+                    cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_RapidFire2, 0, 4, out _);
+                    Thread.Sleep(10);
+                }
+                else
+                {
+                    Thread.Sleep(100);
+                }
+            }
+        }
+        public void InstaKill()
+        {
+            while (true)
+            {
+                Thread.Sleep(100);
+                for (int i = 0; i < 90; i++)
+                {
+                    cwapi.WriteProcessMemory(hProc, (ZMBotListBase + AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_Health, 1, (long)4, out _);
+                    byte[] tempHP = new byte[4];
+                    cwapi.ReadProcessMemory(hProc, (ZMBotListBase + AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_MaxHealth, tempHP, 4, out _);
+                    if (BitConverter.ToInt32(tempHP, 0) > 0)
+                    {
+                        cwapi.WriteProcessMemory(hProc, (ZMBotListBase + AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_MaxHealth, 1, (long)4, out _);
+                    }
+
+                }
+            }
+        }
+
+        public void StatPlayerGrab()
+        {
+            while (true)
+            {
+                byte[] array = new byte[12];
+                cwapi.ReadProcessMemory(this.hProc, this.PlayerPedPtr + AdressOffset.PP_Coords, array, 12L, out _);
+                float num = BitConverter.ToSingle(array, 0);
+                float num2 = BitConverter.ToSingle(array, 4);
+                float num3 = BitConverter.ToSingle(array, 8);
+                updatedPlayerPos = new Vector3((float)Math.Round((double)num, 4), (float)Math.Round((double)num2, 4), (float)Math.Round((double)num3, 4));
+                UpdateLabel(posXLabel, updatedPlayerPos.X.ToString());
+                UpdateLabel(posYLabel, updatedPlayerPos.Y.ToString());
+                UpdateLabel(posZLabel, updatedPlayerPos.Z.ToString());
+
+
+                for (int i = 0; i < 4; i++)
+                {
+                    byte[] _tempBuffer = new byte[100];
+                    cwapi.ReadProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.PC_Name, _tempBuffer, 100, out _);
+                    string a = System.Text.Encoding.UTF8.GetString(_tempBuffer);
+                    switch (i)
+                    {
+                        case 0:
+                            UpdateLabel(player1, a);
+                            break;
+                        case 1:
+                            UpdateLabel(player2, a);
+                            break;
+                        case 2:
+                            UpdateLabel(player3, a);
+                            break;
+                        case 3:
+                            UpdateLabel(player4, a);
+                            break;
+                    }
+                    Thread.Sleep(40);
+                }
+            }
+        }
+
+        public void CurrentWeapon()
+        {
+            while (true)
+            {
+                byte[] _tempBuffer = new byte[8];
+                cwapi.ReadProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_CurrentUsedWeaponID, _tempBuffer, 8, out _);
+                UpdateTextBox(currentWeaponText, BitConverter.ToInt64(_tempBuffer, 0).ToString());
+                Thread.Sleep(200);
+            }
+        }
+        public void TpZombie()
+        {
+            byte[] enemyPosBuffer = new byte[12];
+            bool save = false;
+            while (true)
+            {
+                if (tpZombiCheck.Checked && !tpZombieSavePointCheck.Checked)
+                {
+                    // gets current player position
+                    byte[] playerHeadingXY = new byte[4];
+                    byte[] playerHeadingZ = new byte[4];
+                    cwapi.ReadProcessMemory(hProc, PlayerPedPtr + AdressOffset.PP_Heading_XY, playerHeadingXY, 4, out _);
+                    cwapi.ReadProcessMemory(hProc, PlayerPedPtr + AdressOffset.PP_Heading_Z, playerHeadingZ, 4, out _);
+
+                    // some stack overflow magic to get the direction the player is facing and getting a position in front of the player
+                    double pitch = -ConvertToRadians(BitConverter.ToSingle(playerHeadingZ, 0));
+                    double yaw = ConvertToRadians(BitConverter.ToSingle(playerHeadingXY, 0));
+                    float x = Convert.ToSingle(Math.Cos(yaw) * Math.Cos(pitch));
+                    float y = Convert.ToSingle(Math.Sin(yaw) * Math.Cos(pitch));
+                    float z = Convert.ToSingle(Math.Sin(pitch));
+
+                    // im guessing just a straight up BitConverter.GetBytes could have worked for writing vector3s to memory instead of this kinda messy solution
+                    var newEnemyPos = updatedPlayerPos + new Vector3(x, y, z) * distanceTPBar.Value;
+
+                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPos.X), 0, enemyPosBuffer, 0, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPos.Y), 0, enemyPosBuffer, 4, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPos.Z), 0, enemyPosBuffer, 8, 4);
+
+                    for (int i = 0; i < 90; i++)
+                    {
+                        cwapi.WriteProcessMemory(hProc, ZMBotListBase + (AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_Coords, enemyPosBuffer, 12, out _);
+                    }
+                }
+
+                if (!tpZombiCheck.Checked && tpZombieSavePointCheck.Checked)
+                {
+                    if (!save)
+                    {
+                        byte[] playerHeadingXY = new byte[4];
+                        byte[] playerHeadingZ = new byte[4];
+                        cwapi.ReadProcessMemory(hProc, PlayerPedPtr + AdressOffset.PP_Heading_XY, playerHeadingXY, 4, out _);
+                        cwapi.ReadProcessMemory(hProc, PlayerPedPtr + AdressOffset.PP_Heading_Z, playerHeadingZ, 4, out _);
+
+                        double pitch = -ConvertToRadians(BitConverter.ToSingle(playerHeadingZ, 0));
+                        double yaw = ConvertToRadians(BitConverter.ToSingle(playerHeadingXY, 0));
+                        float x = Convert.ToSingle(Math.Cos(yaw) * Math.Cos(pitch));
+                        float y = Convert.ToSingle(Math.Sin(yaw) * Math.Cos(pitch));
+                        float z = Convert.ToSingle(Math.Sin(pitch));
+
+                        zombieTpPos = updatedPlayerPos + new Vector3(x, y, z) * 150;
+
+                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.X), 0, enemyPosBuffer, 0, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.Y), 0, enemyPosBuffer, 4, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.Z), 0, enemyPosBuffer, 8, 4);
+
+                        if (cwapi.GetAsyncKeyState(Keys.RButton) < 0)
+                        {
+                            save = true;
+                        }
+
+                        for (int i = 0; i < 90; i++)
+                        {
+                            cwapi.WriteProcessMemory(hProc, ZMBotListBase + (AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_Coords, enemyPosBuffer, 12, out _);
+                        }
+                    }
+                    else
+                    {
+                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.X), 0, enemyPosBuffer, 0, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.Y), 0, enemyPosBuffer, 4, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes(zombieTpPos.Z), 0, enemyPosBuffer, 8, 4);
+
+                        for (int i = 0; i < 90; i++)
+                        {
+                            cwapi.WriteProcessMemory(hProc, ZMBotListBase + (AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_Coords, enemyPosBuffer, 12, out _);
+                        }
+                    }
+                }
+
+                if (!tpZombieSavePointCheck.Checked)
+                {
+                    save = false;
+                }
+
+                if (!tpZombiCheck.Checked && !tpZombieSavePointCheck.Checked)
+                {
+                    Thread.Sleep(500);
+                }
+                else
+                {
+                    Thread.Sleep(50);
+                }
+            }
+        }
+
         public void  CmdBufferExec(string Command)
         {
             byte[] tempString = new byte[Command.Length];
             tempString = Encoding.UTF8.GetBytes(Command + "\0");
-            cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + CMDBufferBase.ToInt64()), tempString, tempString.Length, out _);// Write Command
-            cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + CMDBufferBase.ToInt64()) - 0x1B, (byte)1, 1, out _);// Execute
+            cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.CMDBufferBase.ToInt64()), tempString, tempString.Length, out _);// Write Command
+            cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.CMDBufferBase.ToInt64()) - 0x1B, (byte)1, 1, out _);// Execute
             Thread.Sleep(20);
-            cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + CMDBufferBase.ToInt64()) - 0x1B, (byte)0, 1, out _);// Stop spam if Input-Command is wrong
+            cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.CMDBufferBase.ToInt64()) - 0x1B, (byte)0, 1, out _);// Stop spam if Input-Command is wrong
             tempString = Encoding.UTF8.GetBytes("\0");
-            cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + CMDBufferBase.ToInt64()), tempString, tempString.Length, out _);// clear Input-Command
+            cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.CMDBufferBase.ToInt64()), tempString, tempString.Length, out _);// clear Input-Command
         }
         public void EndGame()
         {
@@ -1011,10 +984,10 @@ namespace learn_c___in_cs
         public void freezePlayer(object player)
         {
             byte[] array = new byte[12];
-            cwapi.ReadProcessMemory(hProc, PlayerPedPtr + (PP_ArraySize_Offset * (int)player) + PP_Coords, array, 12L, out _);
+            cwapi.ReadProcessMemory(hProc, PlayerPedPtr + (AdressOffset.PP_ArraySize_Offset * (int)player) + AdressOffset.PP_Coords, array, 12L, out _);
             while (true)
             {
-                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (PC_ArraySize_Offset * (int)player) + PC_Coords, array, 12L, out _);
+                cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * (int)player) + AdressOffset.PC_Coords, array, 12L, out _);
                 Thread.Sleep(60);
             }
         }
