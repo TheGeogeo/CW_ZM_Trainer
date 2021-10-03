@@ -1,4 +1,4 @@
-# CW_ZM_Trainer
+# Cold War Zombie Trainer
 
 My thread : https://www.unknowncheats.me/forum/call-of-duty-black-ops-cold-war/443043-trainer-cw-zm.html
 
