@@ -54,7 +54,7 @@ namespace learn_c___in_cs
         public const int PC_Ammo = 0x13D4; // +(1-5 * 0x4 for WP1 to WP6)
         public const int PC_Points = 0x5D24;
         public const int PC_Name = 0x605C;
-        public const int PC_RunSpeed = 0x5C60;
+        public const int PC_RunSpeed = 0x5C70;
         public const int PC_ClanTags = 0x605C;
         public const int PC_autoFire = 0xE70;
         public const int PC_Coords = 0xDE8; // writeable only
