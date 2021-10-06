@@ -4,7 +4,7 @@ My thread : https://www.unknowncheats.me/forum/call-of-duty-black-ops-cold-war/4
 
 If you don't know how get main adress look the main thread: https://www.unknowncheats.me/forum/call-of-duty-black-ops-cold-war/421778-call-duty-black-ops-cold-war-reversal-structs-offsets.html
 
-or use my tool : https://www.unknowncheats.me/forum/downloads.php?do=file&id=34902
+or use my tool : https://www.unknowncheats.me/forum/downloads.php?do=file&id=34929
 
 or look this : https://www.unknowncheats.me/forum/call-of-duty-black-ops-cold-war/460931-cw-update-offset-aobscan-ce.html
 
