@@ -551,7 +551,7 @@ namespace learn_c___in_cs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Process.Start("https://pastebin.com/BM66nWGk");
+            Process.Start("https://www.unknowncheats.me/forum/3264566-post2148.html");
         }
 
         private void godmodeAllCheck_CheckedChanged(object sender, EventArgs e)
