@@ -167,6 +167,10 @@ namespace learn_c___in_cs
             tpZombiT = new Thread(TpZombie) { IsBackground = true };
             tpZombiT.Start();
             if (!backgroundWorker1.IsBusy) backgroundWorker1.RunWorkerAsync();
+
+            playerBaseTextBox.Text = "0x" + AdressOffset.PlayerBase.ToInt64().ToString("X");
+            cmdBufferTextBox.Text = "0x" + AdressOffset.CMDBufferBase.ToInt64().ToString("X");
+            xpScaleTextBox.Text = "0x" + AdressOffset.XPScaleBase.ToInt64().ToString("X");
         }
 
 
