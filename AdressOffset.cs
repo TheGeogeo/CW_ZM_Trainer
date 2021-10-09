@@ -6,9 +6,9 @@ namespace learn_c___in_cs
     {
         //-------------------------------------------------Adress update 1.18.1----------------------------------------------------
 
-        public static IntPtr PlayerBase = (IntPtr)0x112931C8; //G_Client
-        public static IntPtr CMDBufferBase = (IntPtr)0xD81A8B0;
-        public static IntPtr XPScaleBase = (IntPtr)0x112C31B8;
+        public static IntPtr PlayerBase = (IntPtr)0x11253DC8; //G_Client
+        public static IntPtr CMDBufferBase = (IntPtr)0xD7EA8D0;
+        public static IntPtr XPScaleBase = (IntPtr)0x11283DB8;
 
         //--------------------------------------------------------Offset------------------------------------------------------------
         // If after change adress your game crash it's because offset change probably
