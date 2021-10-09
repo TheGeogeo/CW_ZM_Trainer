@@ -4,7 +4,7 @@ namespace learn_c___in_cs
 {
     class AdressOffset
     {
-        //-------------------------------------------------Adress update 1.18.1----------------------------------------------------
+        //-------------------------------------------------Adress update 1.18.2----------------------------------------------------
 
         public static IntPtr PlayerBase = (IntPtr)0x11253DC8; //G_Client
         public static IntPtr CMDBufferBase = (IntPtr)0xD7EA8D0;
