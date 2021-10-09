@@ -31,7 +31,7 @@ namespace learn_c___in_cs
 
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
-        public string currentVersion = "Work in ...";
+        public string currentVersion = "Check the adress is the right adress.";
 
         public int gamePID = 0;
         public IntPtr hProc;
@@ -65,7 +65,7 @@ namespace learn_c___in_cs
                 logsText.AppendText(Environment.NewLine);
             }));
         }
-        public void UpdateTextBox(TextBox textbox,string str)
+        public void UpdateTextBox(TextBox textbox, string str)
         {
             textbox.Invoke(new MethodInvoker(delegate
             {
@@ -115,6 +115,11 @@ namespace learn_c___in_cs
                 attachButton.Text = "STOPPED";
                 attachButton.ForeColor = Color.Red;
             }
+
+            changeAdressButton.Enabled = false;
+            playerBaseTextBox.Enabled = false;
+            xpScaleTextBox.Enabled = false;
+            cmdBufferTextBox.Enabled = false;
         }
 
         public MainForm()
@@ -249,7 +254,8 @@ namespace learn_c___in_cs
                     }
 
 
-                    if (!isrunning) {
+                    if (!isrunning)
+                    {
                         Thread.Sleep(100);
                         continue;
                     }
@@ -437,7 +443,7 @@ namespace learn_c___in_cs
                     {
                         byte[] tempHP = new byte[4];
                         cwapi.ReadProcessMemory(hProc, (ZMBotListBase + AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_MaxHealth, tempHP, 4, out _);
-                        if (BitConverter.ToInt32(tempHP,0) > 0)
+                        if (BitConverter.ToInt32(tempHP, 0) > 0)
                         {
                             ZLeft++;
                         }
@@ -445,7 +451,8 @@ namespace learn_c___in_cs
                     zombieLeftLabel.Text = (ZLeft).ToString();
 
 
-                    if (!godmodCheck.Enabled) {
+                    if (!godmodCheck.Enabled)
+                    {
                         godmodCheck.Enabled = true;
                         munInfCheck.Enabled = true;
                         moneyInfCheck.Enabled = true;
@@ -489,7 +496,7 @@ namespace learn_c___in_cs
                 Thread.Sleep(40);
             }
         }
-        
+
 
         private void tpZombiCheck_CheckedChanged(object sender, EventArgs e)
         {
@@ -618,7 +625,7 @@ namespace learn_c___in_cs
         {
         }
 
-        
+
 
         private void kick2_Click(object sender, EventArgs e)
         {
@@ -670,7 +677,8 @@ namespace learn_c___in_cs
                 {
                     CmdBufferExec("magic_chest_movable 0");
                 }
-            } else
+            }
+            else
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -679,7 +687,7 @@ namespace learn_c___in_cs
             }
         }
 
-        
+
 
         private void cmdBufferBtn_Click(object sender, EventArgs e)
         {
@@ -756,6 +764,46 @@ namespace learn_c___in_cs
             {
                 TopMost = true;
             }
+        }
+
+        private void changeAdressButton_Click(object sender, EventArgs e)
+        {
+            long pbTmp, cmdTmp, xpTmp;
+            if (playerBaseTextBox.Text.StartsWith("0x"))
+            {
+                pbTmp = long.Parse(playerBaseTextBox.Text.Substring(2), System.Globalization.NumberStyles.HexNumber);
+                AdressOffset.PlayerBase = new IntPtr(pbTmp);
+            }
+            else
+            {
+                pbTmp = long.Parse(playerBaseTextBox.Text, System.Globalization.NumberStyles.HexNumber);
+                AdressOffset.PlayerBase = new IntPtr(pbTmp);
+            }
+
+            if (cmdBufferTextBox.Text.StartsWith("0x"))
+            {
+                cmdTmp = long.Parse(cmdBufferTextBox.Text.Substring(2), System.Globalization.NumberStyles.HexNumber);
+                AdressOffset.CMDBufferBase = new IntPtr(cmdTmp);
+            }
+            else
+            {
+                cmdTmp = long.Parse(cmdBufferTextBox.Text, System.Globalization.NumberStyles.HexNumber);
+                AdressOffset.CMDBufferBase = new IntPtr(cmdTmp);
+            }
+
+            if (xpScaleTextBox.Text.StartsWith("0x"))
+            {
+                xpTmp = long.Parse(xpScaleTextBox.Text.Substring(2), System.Globalization.NumberStyles.HexNumber);
+                AdressOffset.XPScaleBase = new IntPtr(xpTmp);
+            }
+            else
+            {
+                xpTmp = long.Parse(xpScaleTextBox.Text, System.Globalization.NumberStyles.HexNumber);
+                AdressOffset.XPScaleBase = new IntPtr(xpTmp);
+            }
+            consoleOut("New playerBase adress : " + "0x" + AdressOffset.PlayerBase.ToInt64().ToString("X"));
+            consoleOut("New cmdbuffer adress : " + "0x" + AdressOffset.CMDBufferBase.ToInt64().ToString("X"));
+            consoleOut("New xpscale adress : " + "0x" + AdressOffset.XPScaleBase.ToInt64().ToString("X"));
         }
 
         public double ConvertToRadians(double angle)
@@ -942,7 +990,9 @@ namespace learn_c___in_cs
             }
         }
 
-        public void  CmdBufferExec(string Command)
+
+
+        public void CmdBufferExec(string Command)
         {
             byte[] tempString = new byte[Command.Length];
             tempString = Encoding.UTF8.GetBytes(Command + "\0");
