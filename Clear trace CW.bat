@@ -38,6 +38,7 @@ if exist %programdata%\Blizzard Entertainment\ (
 if exist %UserProfile%\documents\Call Of Duty Black Ops Cold War\ (
   RMDIR /S /Q "%UserProfile%\documents\Call Of Duty Black Ops Cold War\"
 )
+echo Go on battle.net and repair your game.
 
 :end
 pause
