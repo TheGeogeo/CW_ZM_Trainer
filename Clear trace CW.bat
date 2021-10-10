@@ -12,6 +12,7 @@ goto check_Permissions
     )
 
 :next
+taskkill /F /IM Battle.net.exe
 reg query "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Blizzard Entertainment"
 if %ERRORLEVEL% EQU 0 reg delete "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Blizzard Entertainment" /f
 reg query "HKEY_CURRENT_USER\Software\Blizzard Entertainment\Battle.net\Identity"
@@ -38,7 +39,18 @@ if exist %programdata%\Blizzard Entertainment\ (
 if exist %UserProfile%\documents\Call Of Duty Black Ops Cold War\ (
   RMDIR /S /Q "%UserProfile%\documents\Call Of Duty Black Ops Cold War\"
 )
+
+cls
+echo --------------------------------------
+echo .
+echo .
 echo Go on battle.net and repair your game.
+echo May you need to reconnect at your account.
+echo Shadow ban can be removed not 100% sure.
+echo Do this again if you change for another account.
+echo .
+echo .
+echo --------------------------------------
 
 :end
 pause
