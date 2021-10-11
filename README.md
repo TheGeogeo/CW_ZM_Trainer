@@ -10,6 +10,12 @@ or look this : https://www.unknowncheats.me/forum/call-of-duty-black-ops-cold-wa
 
 If you need some help for edit something > TheGeogeo#2719
 
+# If you are shadowban...
+
+Use this : https://github.com/TheGeogeo/CW_ZM_Trainer/blob/main/Clear%20trace%20CW.bat
+
+It is not an HWID Spoofer.
+
 # Important thing below !!!!
 
 https://www.youtube.com/watch?v=0yCArSCmJV0
