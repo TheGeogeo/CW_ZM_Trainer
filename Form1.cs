@@ -232,8 +232,7 @@ namespace learn_c___in_cs
                         Kick4.Enabled = false;
                         freezeBoxCheck.Enabled = false;
                         reviveFarBtn.Enabled = false;
-
-                        //activeXPCheck.Enabled = true;
+                        //activeXPCheck.Enabled = false;
 
                         godmodCheck.Checked = false;
                         munInfCheck.Checked = false;
@@ -255,6 +254,7 @@ namespace learn_c___in_cs
                         freeze2Check.Checked = false;
                         freeze3Check.Checked = false;
                         freezeBoxCheck.Checked = false;
+                        //activeXPCheck.Checked = false;
                     }
 
 
@@ -810,6 +810,124 @@ namespace learn_c___in_cs
             consoleOut("New xpscale adress : " + "0x" + AdressOffset.XPScaleBase.ToInt64().ToString("X"));
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                godmodCheck.Enabled = false;
+                munInfCheck.Enabled = false;
+                moneyInfCheck.Enabled = false;
+                rapifFirecheck.Enabled = false;
+                instaKillCheck.Enabled = false;
+                moveSpeedTrackBar.Enabled = false;
+                thermalScopeCheck.Enabled = false;
+                tpZombiCheck.Enabled = false;
+                changeWeaponButton.Enabled = false;
+                godmodeAllCheck.Enabled = false;
+                munitionInfAllCheck.Enabled = false;
+                tpZombieSavePointCheck.Enabled = false;
+                infMoneyAllCheck.Enabled = false;
+                changeWPP2.Enabled = false;
+                changeWPP3.Enabled = false;
+                changeWPP4.Enabled = false;
+                critKillCheck.Enabled = false;
+                allCritKill.Enabled = false;
+                autoFireCheck.Enabled = false;
+                freeze0Check.Enabled = false;
+                freeze1Check.Enabled = false;
+                freeze2Check.Enabled = false;
+                freeze3Check.Enabled = false;
+                cmdBufferInput.Enabled = false;
+                cmdBufferBtn.Enabled = false;
+                kick2.Enabled = false;
+                Kick3.Enabled = false;
+                Kick4.Enabled = false;
+                freezeBoxCheck.Enabled = false;
+                reviveFarBtn.Enabled = false;
+                //activeXPCheck.Enabled = false;
+
+                godmodCheck.Checked = false;
+                munInfCheck.Checked = false;
+                moneyInfCheck.Checked = false;
+                rapifFirecheck.Checked = false;
+                instaKillCheck.Checked = false;
+                moveSpeedTrackBar.Value = 1;
+                thermalScopeCheck.Checked = false;
+                tpZombiCheck.Checked = false;
+                godmodeAllCheck.Checked = false;
+                munitionInfAllCheck.Checked = false;
+                tpZombieSavePointCheck.Checked = false;
+                infMoneyAllCheck.Checked = false;
+                critKillCheck.Checked = false;
+                allCritKill.Checked = false;
+                autoFireCheck.Checked = false;
+                freeze0Check.Checked = false;
+                freeze1Check.Checked = false;
+                freeze2Check.Checked = false;
+                freeze3Check.Checked = false;
+                freezeBoxCheck.Checked = false;
+                //activeXPCheck.Checked = false;
+
+                var gameProcs = Process.GetProcessesByName("BlackOpsColdWar");
+
+                if (gameProcs.Length < 1) return;
+
+                gameProc = gameProcs[0];
+
+
+                gamePID = gameProc.Id;
+
+
+                if (gamePID < 1) return;
+
+                hProc = cwapi.OpenProcess(cwapi.ProcessAccessFlags.All, false, gameProc.Id);
+
+                if (baseAddress != cwapi.GetModuleBaseAddress(gameProc, "BlackOpsColdWar.exe"))
+                {
+                    baseAddress = cwapi.GetModuleBaseAddress(gameProc, "BlackOpsColdWar.exe");
+                }
+
+                if (PlayerCompPtr != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64()), new int[] { 0 }))
+                {
+                    PlayerCompPtr = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64()), new int[] { 0 });
+                }
+
+                if (PlayerPedPtr != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x8), new int[] { 0 }))
+                {
+                    PlayerPedPtr = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x8), new int[] { 0 });
+                }
+
+                if (ZMGlobalBase != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x60), new int[] { 0 }))
+                {
+                    ZMGlobalBase = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x60), new int[] { 0 });
+                }
+
+                if (ZMBotBase != cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64() + 0x68), new int[] { 0 }))
+                {
+                    ZMBotBase = cwapi.FindDMAAddy(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.PlayerBase.ToInt64()) + 0x68, new int[] { 0 });
+                }
+
+                if (ZMBotBase != (IntPtr)0x0 && ZMBotBase != (IntPtr)0x68 && ZMBotListBase != cwapi.FindDMAAddy(hProc, ZMBotBase + AdressOffset.ZM_Bot_List_Offset, new int[] { 0 }))
+                {
+                    ZMBotListBase = cwapi.FindDMAAddy(hProc, ZMBotBase + AdressOffset.ZM_Bot_List_Offset, new int[] { 0 });
+                }
+
+                for (int i = 0; i < 4; i++)
+                {
+                    cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.PC_GodMode, 0x20, 1, out _);
+                }
+
+                for (int i = 0; i < 4; i++)
+                {
+                    cwapi.WriteProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * i) + AdressOffset.CritKill8, 0, 1, out _);
+                }
+            }
+            catch (Exception err)
+            {
+                consoleOut(err.Message);
+            }
+        }
+
         public double ConvertToRadians(double angle)
         {
             return (Math.PI / 180) * angle;
@@ -993,8 +1111,6 @@ namespace learn_c___in_cs
                 }
             }
         }
-
-
 
         public void CmdBufferExec(string Command)
         {

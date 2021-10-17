@@ -68,6 +68,13 @@ namespace learn_c___in_cs
             this.munitionInfAllCheck = new System.Windows.Forms.CheckBox();
             this.tpZombieSavePointCheck = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.changeAdressButton = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.xpScaleTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmdBufferTextBox = new System.Windows.Forms.TextBox();
+            this.playerBaseTextBox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.freeze0Check = new System.Windows.Forms.CheckBox();
@@ -105,13 +112,6 @@ namespace learn_c___in_cs
             this.label3 = new System.Windows.Forms.Label();
             this.zombieLeftLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.playerBaseTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cmdBufferTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.xpScaleTextBox = new System.Windows.Forms.TextBox();
-            this.changeAdressButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.moveSpeedTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xpPlayerBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xpWeaponBar)).BeginInit();
@@ -568,6 +568,65 @@ namespace learn_c___in_cs
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "LOGS";
             // 
+            // changeAdressButton
+            // 
+            this.changeAdressButton.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.changeAdressButton.Location = new System.Drawing.Point(113, 174);
+            this.changeAdressButton.Name = "changeAdressButton";
+            this.changeAdressButton.Size = new System.Drawing.Size(100, 32);
+            this.changeAdressButton.TabIndex = 13;
+            this.changeAdressButton.Text = "CHANGE";
+            this.changeAdressButton.UseVisualStyleBackColor = false;
+            this.changeAdressButton.Click += new System.EventHandler(this.changeAdressButton_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 162);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(88, 15);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "XPScaleBase :";
+            // 
+            // xpScaleTextBox
+            // 
+            this.xpScaleTextBox.Location = new System.Drawing.Point(11, 180);
+            this.xpScaleTextBox.Name = "xpScaleTextBox";
+            this.xpScaleTextBox.Size = new System.Drawing.Size(100, 20);
+            this.xpScaleTextBox.TabIndex = 17;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 121);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(78, 15);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "PlayerBase :";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(110, 121);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(77, 15);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "CmdBuffer :";
+            // 
+            // cmdBufferTextBox
+            // 
+            this.cmdBufferTextBox.Location = new System.Drawing.Point(113, 139);
+            this.cmdBufferTextBox.Name = "cmdBufferTextBox";
+            this.cmdBufferTextBox.Size = new System.Drawing.Size(100, 20);
+            this.cmdBufferTextBox.TabIndex = 15;
+            // 
+            // playerBaseTextBox
+            // 
+            this.playerBaseTextBox.Location = new System.Drawing.Point(11, 139);
+            this.playerBaseTextBox.Name = "playerBaseTextBox";
+            this.playerBaseTextBox.Size = new System.Drawing.Size(100, 20);
+            this.playerBaseTextBox.TabIndex = 13;
+            // 
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.DimGray;
@@ -1023,65 +1082,6 @@ namespace learn_c___in_cs
             this.label1.TabIndex = 0;
             this.label1.Text = "Zombie left : ";
             // 
-            // playerBaseTextBox
-            // 
-            this.playerBaseTextBox.Location = new System.Drawing.Point(11, 139);
-            this.playerBaseTextBox.Name = "playerBaseTextBox";
-            this.playerBaseTextBox.Size = new System.Drawing.Size(100, 20);
-            this.playerBaseTextBox.TabIndex = 13;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 121);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(78, 15);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "PlayerBase :";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(110, 121);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 15);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "CmdBuffer :";
-            // 
-            // cmdBufferTextBox
-            // 
-            this.cmdBufferTextBox.Location = new System.Drawing.Point(113, 139);
-            this.cmdBufferTextBox.Name = "cmdBufferTextBox";
-            this.cmdBufferTextBox.Size = new System.Drawing.Size(100, 20);
-            this.cmdBufferTextBox.TabIndex = 15;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 162);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(88, 15);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "XPScaleBase :";
-            // 
-            // xpScaleTextBox
-            // 
-            this.xpScaleTextBox.Location = new System.Drawing.Point(11, 180);
-            this.xpScaleTextBox.Name = "xpScaleTextBox";
-            this.xpScaleTextBox.Size = new System.Drawing.Size(100, 20);
-            this.xpScaleTextBox.TabIndex = 17;
-            // 
-            // changeAdressButton
-            // 
-            this.changeAdressButton.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.changeAdressButton.Location = new System.Drawing.Point(113, 174);
-            this.changeAdressButton.Name = "changeAdressButton";
-            this.changeAdressButton.Size = new System.Drawing.Size(100, 32);
-            this.changeAdressButton.TabIndex = 13;
-            this.changeAdressButton.Text = "CHANGE";
-            this.changeAdressButton.UseVisualStyleBackColor = false;
-            this.changeAdressButton.Click += new System.EventHandler(this.changeAdressButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -1105,6 +1105,7 @@ namespace learn_c___in_cs
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "RECETTES FONDANTES ET CROQUANTES | PAR CYRIL LIGNAC";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.moveSpeedTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xpPlayerBar)).EndInit();
