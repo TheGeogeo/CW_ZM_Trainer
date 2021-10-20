@@ -16,7 +16,7 @@ Use this : https://github.com/TheGeogeo/CW_ZM_Trainer/blob/main/Clear%20trace%20
 
 It is not an HWID Spoofer.
 
-# Important thing below !!!!
+# IMPORTYANT THING below !!!!
 
 BTC -> 3R2JDh3HQJ8UuCFQ7bxw6S2cY8hfcE8d4m
 
