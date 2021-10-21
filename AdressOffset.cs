@@ -2,7 +2,7 @@
 
 namespace learn_c___in_cs
 {
-    class AdressOffset
+    internal class AdressOffset
     {
         //-------------------------------------------------Adress update 1.18.4----------------------------------------------------
 
@@ -34,9 +34,9 @@ namespace learn_c___in_cs
         public const int PC_Coords = 0xDE8; // writeable only
 
         public const int KillCount = 0x5CE8;
-        public const int CritKill8 = 0x10DA;  
+        public const int CritKill8 = 0x10DA;
 
-        public const int PP_ArraySize_Offset = 0x5E8; 
+        public const int PP_ArraySize_Offset = 0x5E8;
 
         public const int PP_Health = 0x398;
         public const int PP_MaxHealth = 0x39C;

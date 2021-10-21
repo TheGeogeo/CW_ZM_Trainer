@@ -1,31 +1,28 @@
-﻿using System;
+﻿using cw;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Numerics;
-using System.Threading;
 using System.Text;
-using cw;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace learn_c___in_cs
 {
-
     public partial class MainForm : Form
     {
+        private Thread rapidFireT;
+        private Thread instaKillT;
+        private Thread namePlayerT;
+        private Thread currentWeaponT;
+        private Thread tpZombiT;
+        private Thread endGameT;
 
-        Thread rapidFireT;
-        Thread instaKillT;
-        Thread namePlayerT;
-        Thread currentWeaponT;
-        Thread tpZombiT;
-        Thread endGameT;
-
-        Thread freeze0T;
-        Thread freeze1T;
-        Thread freeze2T;
-        Thread freeze3T;
-
+        private Thread freeze0T;
+        private Thread freeze1T;
+        private Thread freeze2T;
+        private Thread freeze3T;
 
         //-----------------------------------------------------------------------------------------------------------------------
 
@@ -56,7 +53,6 @@ namespace learn_c___in_cs
 
         public Single TimesModifier = 1.0f;
 
-
         public void consoleOut(string str)
         {
             logsText.Invoke(new MethodInvoker(delegate
@@ -65,6 +61,7 @@ namespace learn_c___in_cs
                 logsText.AppendText(Environment.NewLine);
             }));
         }
+
         public void UpdateTextBox(TextBox textbox, string str)
         {
             textbox.Invoke(new MethodInvoker(delegate
@@ -173,8 +170,6 @@ namespace learn_c___in_cs
             xpScaleTextBox.Text = "0x" + AdressOffset.XPScaleBase.ToInt64().ToString("X");
         }
 
-
-
         private void thermalScopeCheck_CheckedChanged(object sender, EventArgs e)
         {
             if (thermalScopeCheck.Checked)
@@ -257,13 +252,11 @@ namespace learn_c___in_cs
                         //activeXPCheck.Checked = false;
                     }
 
-
                     if (!isrunning)
                     {
                         Thread.Sleep(100);
                         continue;
                     }
-
 
                     var gameProcs = Process.GetProcessesByName("BlackOpsColdWar");
 
@@ -278,9 +271,7 @@ namespace learn_c___in_cs
                     // get first process from the gameProcs array
                     gameProc = gameProcs[0];
 
-
                     gamePID = gameProc.Id;
-
 
                     if (gamePID < 1)
                     {
@@ -454,7 +445,6 @@ namespace learn_c___in_cs
                     }
                     zombieLeftLabel.Text = (ZLeft).ToString();
 
-
                     if (!godmodCheck.Enabled)
                     {
                         godmodCheck.Enabled = true;
@@ -491,7 +481,6 @@ namespace learn_c___in_cs
                         freeze3Check.Enabled = true;
                         reviveFarBtn.Enabled = true;
                     }
-
                 }
                 catch (Exception err)
                 {
@@ -500,7 +489,6 @@ namespace learn_c___in_cs
                 Thread.Sleep(40);
             }
         }
-
 
         private void tpZombiCheck_CheckedChanged(object sender, EventArgs e)
         {
@@ -579,17 +567,14 @@ namespace learn_c___in_cs
 
         private void xpWeaponLabel_Click(object sender, EventArgs e)
         {
-
         }
 
         private void groupBox6_Enter(object sender, EventArgs e)
         {
-
         }
 
         private void player3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void changeWPP2_Click(object sender, EventArgs e)
@@ -628,8 +613,6 @@ namespace learn_c___in_cs
         private void critKillCheck_CheckedChanged(object sender, EventArgs e)
         {
         }
-
-
 
         private void kick2_Click(object sender, EventArgs e)
         {
@@ -690,8 +673,6 @@ namespace learn_c___in_cs
                 }
             }
         }
-
-
 
         private void cmdBufferBtn_Click(object sender, EventArgs e)
         {
@@ -874,9 +855,7 @@ namespace learn_c___in_cs
 
                 gameProc = gameProcs[0];
 
-
                 gamePID = gameProc.Id;
-
 
                 if (gamePID < 1) return;
 
@@ -932,11 +911,11 @@ namespace learn_c___in_cs
         {
             return (Math.PI / 180) * angle;
         }
+
         public void RapidFire()
         {
             while (true)
             {
-
                 if (rapifFirecheck.Checked && cwapi.GetAsyncKeyState(Keys.LButton) < 0)
                 {
                     cwapi.WriteProcessMemory(hProc, PlayerCompPtr + AdressOffset.PC_RapidFire1, 0, 4, out _);
@@ -949,6 +928,7 @@ namespace learn_c___in_cs
                 }
             }
         }
+
         public void InstaKill()
         {
             while (true)
@@ -963,7 +943,6 @@ namespace learn_c___in_cs
                     {
                         cwapi.WriteProcessMemory(hProc, (ZMBotListBase + AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_MaxHealth, 1, (long)4, out _);
                     }
-
                 }
             }
         }
@@ -982,7 +961,6 @@ namespace learn_c___in_cs
                 UpdateLabel(posYLabel, updatedPlayerPos.Y.ToString());
                 UpdateLabel(posZLabel, updatedPlayerPos.Z.ToString());
 
-
                 for (int i = 0; i < 4; i++)
                 {
                     byte[] _tempBuffer = new byte[100];
@@ -993,12 +971,15 @@ namespace learn_c___in_cs
                         case 0:
                             UpdateLabel(player1, a);
                             break;
+
                         case 1:
                             UpdateLabel(player2, a);
                             break;
+
                         case 2:
                             UpdateLabel(player3, a);
                             break;
+
                         case 3:
                             UpdateLabel(player4, a);
                             break;
@@ -1018,6 +999,7 @@ namespace learn_c___in_cs
                 Thread.Sleep(200);
             }
         }
+
         public void TpZombie()
         {
             byte[] enemyPosBuffer = new byte[12];
@@ -1123,6 +1105,7 @@ namespace learn_c___in_cs
             tempString = Encoding.UTF8.GetBytes("\0");
             cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.CMDBufferBase.ToInt64()), tempString, tempString.Length, out _);// clear Input-Command
         }
+
         public void EndGame()
         {
             for (int i = 0; i < 500; i++)
@@ -1132,6 +1115,7 @@ namespace learn_c___in_cs
             endAnyLobbyBtn.Enabled = true;
             endGameT.Abort();
         }
+
         public void attachGame()
         {
             var gameProcs = Process.GetProcessesByName("BlackOpsColdWar");
@@ -1161,7 +1145,5 @@ namespace learn_c___in_cs
                 Thread.Sleep(60);
             }
         }
-
     }
 }
-
