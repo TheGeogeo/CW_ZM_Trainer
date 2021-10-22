@@ -102,11 +102,6 @@ namespace learn_c___in_cs
             this.wpP2Text = new System.Windows.Forms.TextBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.topMostButton = new System.Windows.Forms.CheckBox();
-            this.reviveFarBtn = new System.Windows.Forms.Button();
-            this.freezeBoxCheck = new System.Windows.Forms.CheckBox();
-            this.instantSartBtn = new System.Windows.Forms.Button();
-            this.endAnyLobbyBtn = new System.Windows.Forms.Button();
-            this.killLobbyBtn = new System.Windows.Forms.Button();
             this.cmdBufferBtn = new System.Windows.Forms.Button();
             this.cmdBufferInput = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -813,7 +808,7 @@ namespace learn_c___in_cs
             this.groupBox7.Controls.Add(this.player4);
             this.groupBox7.Controls.Add(this.player2);
             this.groupBox7.Controls.Add(this.player3);
-            this.groupBox7.Location = new System.Drawing.Point(19, 720);
+            this.groupBox7.Location = new System.Drawing.Point(19, 668);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(592, 154);
             this.groupBox7.TabIndex = 34;
@@ -952,11 +947,6 @@ namespace learn_c___in_cs
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.topMostButton);
-            this.groupBox8.Controls.Add(this.reviveFarBtn);
-            this.groupBox8.Controls.Add(this.freezeBoxCheck);
-            this.groupBox8.Controls.Add(this.instantSartBtn);
-            this.groupBox8.Controls.Add(this.endAnyLobbyBtn);
-            this.groupBox8.Controls.Add(this.killLobbyBtn);
             this.groupBox8.Controls.Add(this.cmdBufferBtn);
             this.groupBox8.Controls.Add(this.cmdBufferInput);
             this.groupBox8.Controls.Add(this.label3);
@@ -964,7 +954,7 @@ namespace learn_c___in_cs
             this.groupBox8.Controls.Add(this.label1);
             this.groupBox8.Location = new System.Drawing.Point(19, 585);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(592, 138);
+            this.groupBox8.Size = new System.Drawing.Size(592, 77);
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "MISC";
@@ -972,7 +962,7 @@ namespace learn_c___in_cs
             // topMostButton
             // 
             this.topMostButton.AutoSize = true;
-            this.topMostButton.Location = new System.Drawing.Point(379, 106);
+            this.topMostButton.Location = new System.Drawing.Point(386, 20);
             this.topMostButton.Name = "topMostButton";
             this.topMostButton.Size = new System.Drawing.Size(196, 19);
             this.topMostButton.TabIndex = 12;
@@ -980,67 +970,10 @@ namespace learn_c___in_cs
             this.topMostButton.UseVisualStyleBackColor = true;
             this.topMostButton.CheckedChanged += new System.EventHandler(this.topMostButton_CheckedChanged);
             // 
-            // reviveFarBtn
-            // 
-            this.reviveFarBtn.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.reviveFarBtn.Enabled = false;
-            this.reviveFarBtn.Location = new System.Drawing.Point(6, 106);
-            this.reviveFarBtn.Name = "reviveFarBtn";
-            this.reviveFarBtn.Size = new System.Drawing.Size(151, 23);
-            this.reviveFarBtn.TabIndex = 11;
-            this.reviveFarBtn.Text = "Revive far (HOST)";
-            this.reviveFarBtn.UseVisualStyleBackColor = false;
-            this.reviveFarBtn.Click += new System.EventHandler(this.reviveFarBtn_Click);
-            // 
-            // freezeBoxCheck
-            // 
-            this.freezeBoxCheck.AutoSize = true;
-            this.freezeBoxCheck.Enabled = false;
-            this.freezeBoxCheck.Location = new System.Drawing.Point(8, 88);
-            this.freezeBoxCheck.Name = "freezeBoxCheck";
-            this.freezeBoxCheck.Size = new System.Drawing.Size(179, 19);
-            this.freezeBoxCheck.TabIndex = 9;
-            this.freezeBoxCheck.Text = "Freeze mystery box (host)";
-            this.freezeBoxCheck.UseVisualStyleBackColor = true;
-            this.freezeBoxCheck.CheckedChanged += new System.EventHandler(this.freezeBoxCheck_CheckedChanged);
-            // 
-            // instantSartBtn
-            // 
-            this.instantSartBtn.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.instantSartBtn.Location = new System.Drawing.Point(379, 20);
-            this.instantSartBtn.Name = "instantSartBtn";
-            this.instantSartBtn.Size = new System.Drawing.Size(203, 23);
-            this.instantSartBtn.TabIndex = 8;
-            this.instantSartBtn.Text = "Instant start game (host)";
-            this.instantSartBtn.UseVisualStyleBackColor = false;
-            this.instantSartBtn.Click += new System.EventHandler(this.instantSartBtn_Click);
-            // 
-            // endAnyLobbyBtn
-            // 
-            this.endAnyLobbyBtn.BackColor = System.Drawing.Color.Crimson;
-            this.endAnyLobbyBtn.Location = new System.Drawing.Point(379, 77);
-            this.endAnyLobbyBtn.Name = "endAnyLobbyBtn";
-            this.endAnyLobbyBtn.Size = new System.Drawing.Size(207, 23);
-            this.endAnyLobbyBtn.TabIndex = 7;
-            this.endAnyLobbyBtn.Text = "End Lobby (noHost / MP work)";
-            this.endAnyLobbyBtn.UseVisualStyleBackColor = false;
-            this.endAnyLobbyBtn.Click += new System.EventHandler(this.endAnyLobbyBtn_Click);
-            // 
-            // killLobbyBtn
-            // 
-            this.killLobbyBtn.BackColor = System.Drawing.Color.Crimson;
-            this.killLobbyBtn.Location = new System.Drawing.Point(379, 48);
-            this.killLobbyBtn.Name = "killLobbyBtn";
-            this.killLobbyBtn.Size = new System.Drawing.Size(204, 23);
-            this.killLobbyBtn.TabIndex = 5;
-            this.killLobbyBtn.Text = "Leave Lobby";
-            this.killLobbyBtn.UseVisualStyleBackColor = false;
-            this.killLobbyBtn.Click += new System.EventHandler(this.killLobbyBtn_Click);
-            // 
             // cmdBufferBtn
             // 
             this.cmdBufferBtn.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.cmdBufferBtn.Location = new System.Drawing.Point(166, 62);
+            this.cmdBufferBtn.Location = new System.Drawing.Point(161, 38);
             this.cmdBufferBtn.Name = "cmdBufferBtn";
             this.cmdBufferBtn.Size = new System.Drawing.Size(45, 23);
             this.cmdBufferBtn.TabIndex = 4;
@@ -1050,7 +983,7 @@ namespace learn_c___in_cs
             // 
             // cmdBufferInput
             // 
-            this.cmdBufferInput.Location = new System.Drawing.Point(8, 62);
+            this.cmdBufferInput.Location = new System.Drawing.Point(6, 39);
             this.cmdBufferInput.Name = "cmdBufferInput";
             this.cmdBufferInput.Size = new System.Drawing.Size(149, 20);
             this.cmdBufferInput.TabIndex = 3;
@@ -1058,7 +991,7 @@ namespace learn_c___in_cs
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 44);
+            this.label3.Location = new System.Drawing.Point(6, 21);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(108, 15);
             this.label3.TabIndex = 2;
@@ -1067,7 +1000,7 @@ namespace learn_c___in_cs
             // zombieLeftLabel
             // 
             this.zombieLeftLabel.AutoSize = true;
-            this.zombieLeftLabel.Location = new System.Drawing.Point(87, 20);
+            this.zombieLeftLabel.Location = new System.Drawing.Point(544, 42);
             this.zombieLeftLabel.Name = "zombieLeftLabel";
             this.zombieLeftLabel.Size = new System.Drawing.Size(32, 15);
             this.zombieLeftLabel.TabIndex = 1;
@@ -1076,7 +1009,7 @@ namespace learn_c___in_cs
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 20);
+            this.label1.Location = new System.Drawing.Point(465, 42);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 15);
             this.label1.TabIndex = 0;
@@ -1087,7 +1020,7 @@ namespace learn_c___in_cs
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(631, 886);
+            this.ClientSize = new System.Drawing.Size(631, 833);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
@@ -1198,15 +1131,10 @@ namespace learn_c___in_cs
         private System.Windows.Forms.Button Kick4;
         private System.Windows.Forms.Button Kick3;
         private System.Windows.Forms.Button kick2;
-        private System.Windows.Forms.Button killLobbyBtn;
-        private System.Windows.Forms.Button endAnyLobbyBtn;
-        private System.Windows.Forms.Button instantSartBtn;
-        private System.Windows.Forms.CheckBox freezeBoxCheck;
         private System.Windows.Forms.CheckBox freeze0Check;
         private System.Windows.Forms.CheckBox freeze3Check;
         private System.Windows.Forms.CheckBox freeze2Check;
         private System.Windows.Forms.CheckBox freeze1Check;
-        private System.Windows.Forms.Button reviveFarBtn;
         private System.Windows.Forms.CheckBox topMostButton;
         private System.Windows.Forms.Button changeAdressButton;
         private System.Windows.Forms.Label label8;

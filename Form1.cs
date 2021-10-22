@@ -28,7 +28,7 @@ namespace learn_c___in_cs
 
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
-        public string currentVersion = "Check the adress is the right adress.";
+        public string currentVersion = "Change adress is CW is not 1.18.4";
 
         public int gamePID = 0;
         public IntPtr hProc;
@@ -225,8 +225,7 @@ namespace learn_c___in_cs
                         kick2.Enabled = false;
                         Kick3.Enabled = false;
                         Kick4.Enabled = false;
-                        freezeBoxCheck.Enabled = false;
-                        reviveFarBtn.Enabled = false;
+
                         //activeXPCheck.Enabled = false;
 
                         godmodCheck.Checked = false;
@@ -248,7 +247,7 @@ namespace learn_c___in_cs
                         freeze1Check.Checked = false;
                         freeze2Check.Checked = false;
                         freeze3Check.Checked = false;
-                        freezeBoxCheck.Checked = false;
+
                         //activeXPCheck.Checked = false;
                     }
 
@@ -474,12 +473,11 @@ namespace learn_c___in_cs
                         kick2.Enabled = true;
                         Kick3.Enabled = true;
                         Kick4.Enabled = true;
-                        freezeBoxCheck.Enabled = true;
+
                         freeze0Check.Enabled = true;
                         freeze1Check.Enabled = true;
                         freeze2Check.Enabled = true;
                         freeze3Check.Enabled = true;
-                        reviveFarBtn.Enabled = true;
                     }
                 }
                 catch (Exception err)
@@ -628,14 +626,6 @@ namespace learn_c___in_cs
             CmdBufferExec("disconnect");
         }
 
-        private void endAnyLobbyBtn_Click(object sender, EventArgs e)
-        {
-            attachGame();
-            endAnyLobbyBtn.Enabled = false;
-            endGameT = new Thread(EndGame) { IsBackground = true };
-            endGameT.Start();
-        }
-
         private void Kick3_Click(object sender, EventArgs e)
         {
             CmdBufferExec("clientkick 2");
@@ -652,25 +642,6 @@ namespace learn_c___in_cs
             for (int i = 0; i < 3; i++)
             {
                 CmdBufferExec("LobbyLaunchGame");
-            }
-        }
-
-        private void freezeBoxCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            attachGame();
-            if (freezeBoxCheck.Checked)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    CmdBufferExec("magic_chest_movable 0");
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    CmdBufferExec("magic_chest_movable 1");
-                }
             }
         }
 
@@ -823,8 +794,6 @@ namespace learn_c___in_cs
                 kick2.Enabled = false;
                 Kick3.Enabled = false;
                 Kick4.Enabled = false;
-                freezeBoxCheck.Enabled = false;
-                reviveFarBtn.Enabled = false;
                 //activeXPCheck.Enabled = false;
 
                 godmodCheck.Checked = false;
@@ -846,7 +815,6 @@ namespace learn_c___in_cs
                 freeze1Check.Checked = false;
                 freeze2Check.Checked = false;
                 freeze3Check.Checked = false;
-                freezeBoxCheck.Checked = false;
                 //activeXPCheck.Checked = false;
 
                 var gameProcs = Process.GetProcessesByName("BlackOpsColdWar");
@@ -1104,16 +1072,6 @@ namespace learn_c___in_cs
             cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.CMDBufferBase.ToInt64()) - 0x1B, (byte)0, 1, out _);// Stop spam if Input-Command is wrong
             tempString = Encoding.UTF8.GetBytes("\0");
             cwapi.WriteProcessMemory(hProc, (IntPtr)(baseAddress.ToInt64() + AdressOffset.CMDBufferBase.ToInt64()), tempString, tempString.Length, out _);// clear Input-Command
-        }
-
-        public void EndGame()
-        {
-            for (int i = 0; i < 500; i++)
-            {
-                CmdBufferExec(string.Format("cmd mr {0} -1 endround 0", i));
-            }
-            endAnyLobbyBtn.Enabled = true;
-            endGameT.Abort();
         }
 
         public void attachGame()
