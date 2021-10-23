@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace learn_c___in_cs
+namespace CW_Beach
 {
     internal class AdressOffset
     {
