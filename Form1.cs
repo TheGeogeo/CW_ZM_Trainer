@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace learn_c___in_cs
+namespace CW_Beach
 {
     public partial class MainForm : Form
     {
@@ -17,7 +17,6 @@ namespace learn_c___in_cs
         private Thread namePlayerT;
         private Thread currentWeaponT;
         private Thread tpZombiT;
-        private Thread endGameT;
 
         private Thread freeze0T;
         private Thread freeze1T;
@@ -28,7 +27,7 @@ namespace learn_c___in_cs
 
         public IntPtr PlayerCompPtr, PlayerPedPtr, ZMGlobalBase, ZMBotBase, ZMBotListBase;
 
-        public string currentVersion = "Change adress is CW is not 1.18.4";
+        public string currentVersion = "Change adress is CW is not 1.19.4";
 
         public int gamePID = 0;
         public IntPtr hProc;
@@ -49,7 +48,6 @@ namespace learn_c___in_cs
 
         public int[] ammoVals = new int[6];
         public int[] maxAmmoVals = new int[6];
-        public int ZLeft = 0;
 
         public Single TimesModifier = 1.0f;
 
@@ -161,6 +159,7 @@ namespace learn_c___in_cs
         private void MainForm_Load(object sender, EventArgs e)
         {
             consoleOut(currentVersion);
+            consoleOut("Press \"ok\" for unlock attach.");
             tpZombiT = new Thread(TpZombie) { IsBackground = true };
             tpZombiT.Start();
             if (!backgroundWorker1.IsBusy) backgroundWorker1.RunWorkerAsync();
@@ -431,19 +430,6 @@ namespace learn_c___in_cs
                         uneFois = false;
                     }
 
-                    // zombie left
-                    ZLeft = 0;
-                    for (int i = 0; i < 90; i++)
-                    {
-                        byte[] tempHP = new byte[4];
-                        cwapi.ReadProcessMemory(hProc, (ZMBotListBase + AdressOffset.ZM_Bot_ArraySize_Offset * i) + AdressOffset.ZM_Bot_MaxHealth, tempHP, 4, out _);
-                        if (BitConverter.ToInt32(tempHP, 0) > 0)
-                        {
-                            ZLeft++;
-                        }
-                    }
-                    zombieLeftLabel.Text = (ZLeft).ToString();
-
                     if (!godmodCheck.Enabled)
                     {
                         godmodCheck.Enabled = true;
@@ -702,14 +688,6 @@ namespace learn_c___in_cs
             }
         }
 
-        private void reviveFarBtn_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                CmdBufferExec("revive_trigger_radius 99999");
-            }
-        }
-
         private void topMostButton_CheckedChanged(object sender, EventArgs e)
         {
             if (topMostButton.Checked)
@@ -757,9 +735,11 @@ namespace learn_c___in_cs
                 xpTmp = long.Parse(xpScaleTextBox.Text, System.Globalization.NumberStyles.HexNumber);
                 AdressOffset.XPScaleBase = new IntPtr(xpTmp);
             }
-            consoleOut("New playerBase adress : " + "0x" + AdressOffset.PlayerBase.ToInt64().ToString("X"));
-            consoleOut("New cmdbuffer adress : " + "0x" + AdressOffset.CMDBufferBase.ToInt64().ToString("X"));
-            consoleOut("New xpscale adress : " + "0x" + AdressOffset.XPScaleBase.ToInt64().ToString("X"));
+            consoleOut("PlayerBase adress set : " + "0x" + AdressOffset.PlayerBase.ToInt64().ToString("X"));
+            consoleOut("Cmdbuffer adress set : " + "0x" + AdressOffset.CMDBufferBase.ToInt64().ToString("X"));
+            consoleOut("Xpscale adress set : " + "0x" + AdressOffset.XPScaleBase.ToInt64().ToString("X"));
+
+            attachButton.Enabled = true;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

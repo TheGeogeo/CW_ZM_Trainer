@@ -1,5 +1,5 @@
 ﻿
-namespace learn_c___in_cs
+namespace CW_Beach
 {
     partial class MainForm
     {
@@ -105,8 +105,6 @@ namespace learn_c___in_cs
             this.cmdBufferBtn = new System.Windows.Forms.Button();
             this.cmdBufferInput = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.zombieLeftLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.moveSpeedTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xpPlayerBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xpWeaponBar)).BeginInit();
@@ -124,6 +122,7 @@ namespace learn_c___in_cs
             // attachButton
             // 
             this.attachButton.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.attachButton.Enabled = false;
             this.attachButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.attachButton.Font = new System.Drawing.Font("Montserrat", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.attachButton.ForeColor = System.Drawing.Color.White;
@@ -808,7 +807,7 @@ namespace learn_c___in_cs
             this.groupBox7.Controls.Add(this.player4);
             this.groupBox7.Controls.Add(this.player2);
             this.groupBox7.Controls.Add(this.player3);
-            this.groupBox7.Location = new System.Drawing.Point(19, 668);
+            this.groupBox7.Location = new System.Drawing.Point(19, 645);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(592, 154);
             this.groupBox7.TabIndex = 34;
@@ -950,11 +949,9 @@ namespace learn_c___in_cs
             this.groupBox8.Controls.Add(this.cmdBufferBtn);
             this.groupBox8.Controls.Add(this.cmdBufferInput);
             this.groupBox8.Controls.Add(this.label3);
-            this.groupBox8.Controls.Add(this.zombieLeftLabel);
-            this.groupBox8.Controls.Add(this.label1);
             this.groupBox8.Location = new System.Drawing.Point(19, 585);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(592, 77);
+            this.groupBox8.Size = new System.Drawing.Size(592, 54);
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "MISC";
@@ -962,7 +959,7 @@ namespace learn_c___in_cs
             // topMostButton
             // 
             this.topMostButton.AutoSize = true;
-            this.topMostButton.Location = new System.Drawing.Point(386, 20);
+            this.topMostButton.Location = new System.Drawing.Point(390, 21);
             this.topMostButton.Name = "topMostButton";
             this.topMostButton.Size = new System.Drawing.Size(196, 19);
             this.topMostButton.TabIndex = 12;
@@ -973,7 +970,7 @@ namespace learn_c___in_cs
             // cmdBufferBtn
             // 
             this.cmdBufferBtn.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.cmdBufferBtn.Location = new System.Drawing.Point(161, 38);
+            this.cmdBufferBtn.Location = new System.Drawing.Point(275, 18);
             this.cmdBufferBtn.Name = "cmdBufferBtn";
             this.cmdBufferBtn.Size = new System.Drawing.Size(45, 23);
             this.cmdBufferBtn.TabIndex = 4;
@@ -983,7 +980,7 @@ namespace learn_c___in_cs
             // 
             // cmdBufferInput
             // 
-            this.cmdBufferInput.Location = new System.Drawing.Point(6, 39);
+            this.cmdBufferInput.Location = new System.Drawing.Point(120, 19);
             this.cmdBufferInput.Name = "cmdBufferInput";
             this.cmdBufferInput.Size = new System.Drawing.Size(149, 20);
             this.cmdBufferInput.TabIndex = 3;
@@ -997,30 +994,12 @@ namespace learn_c___in_cs
             this.label3.TabIndex = 2;
             this.label3.Text = "Command Buffer";
             // 
-            // zombieLeftLabel
-            // 
-            this.zombieLeftLabel.AutoSize = true;
-            this.zombieLeftLabel.Location = new System.Drawing.Point(544, 42);
-            this.zombieLeftLabel.Name = "zombieLeftLabel";
-            this.zombieLeftLabel.Size = new System.Drawing.Size(32, 15);
-            this.zombieLeftLabel.TabIndex = 1;
-            this.zombieLeftLabel.Text = "wait";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(465, 42);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Zombie left : ";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(631, 833);
+            this.ClientSize = new System.Drawing.Size(631, 810);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
@@ -1037,7 +1016,6 @@ namespace learn_c___in_cs
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "RECETTES FONDANTES ET CROQUANTES | PAR CYRIL LIGNAC";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.moveSpeedTrackBar)).EndInit();
@@ -1112,8 +1090,6 @@ namespace learn_c___in_cs
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.CheckBox infMoneyAllCheck;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Label zombieLeftLabel;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button changeWPP2;
         private System.Windows.Forms.TextBox wpP2Text;
         private System.Windows.Forms.Button changeWPP4;

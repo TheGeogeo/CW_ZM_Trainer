@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace learn_c___in_cs
+namespace CW_Beach
 {
     internal static class Program
     {
