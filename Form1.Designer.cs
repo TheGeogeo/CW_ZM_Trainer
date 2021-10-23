@@ -141,6 +141,7 @@ namespace CW_Beach
             this.logsText.Margin = new System.Windows.Forms.Padding(4);
             this.logsText.Multiline = true;
             this.logsText.Name = "logsText";
+            this.logsText.ReadOnly = true;
             this.logsText.Size = new System.Drawing.Size(276, 92);
             this.logsText.TabIndex = 1;
             // 
