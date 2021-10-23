@@ -569,7 +569,7 @@ namespace CW_Beach
             this.changeAdressButton.Name = "changeAdressButton";
             this.changeAdressButton.Size = new System.Drawing.Size(100, 32);
             this.changeAdressButton.TabIndex = 13;
-            this.changeAdressButton.Text = "CHANGE";
+            this.changeAdressButton.Text = "OK";
             this.changeAdressButton.UseVisualStyleBackColor = false;
             this.changeAdressButton.Click += new System.EventHandler(this.changeAdressButton_Click);
             // 
