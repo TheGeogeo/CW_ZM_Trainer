@@ -4,11 +4,11 @@ namespace learn_c___in_cs
 {
     internal class AdressOffset
     {
-        //-------------------------------------------------Adress update 1.18.4----------------------------------------------------
+        //-------------------------------------------------Adress update 1.19.1----------------------------------------------------
 
-        public static IntPtr PlayerBase = (IntPtr)0x11273F48; //G_Client
-        public static IntPtr CMDBufferBase = (IntPtr)0xD8178B0;
-        public static IntPtr XPScaleBase = (IntPtr)0x112A3F38;
+        public static IntPtr PlayerBase = (IntPtr)0x112F1748; //G_Client
+        public static IntPtr CMDBufferBase = (IntPtr)0xD87C890;
+        public static IntPtr XPScaleBase = (IntPtr)0x11321738;
 
         //--------------------------------------------------------Offset------------------------------------------------------------
         // If after change adress your game crash it's because offset change probably
