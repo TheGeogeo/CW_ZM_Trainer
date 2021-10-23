@@ -331,14 +331,6 @@ namespace CW_Beach
                         consoleOut("CARE ALL FEATURE DON'T WORK!!!");
                     }
 
-                    byte[] _tempBufferName = new byte[13];
-                    cwapi.ReadProcessMemory(hProc, PlayerCompPtr + (AdressOffset.PC_ArraySize_Offset * 0) + AdressOffset.PC_Name, _tempBufferName, 13, out _);
-                    string _tempBufferNameString = Encoding.UTF8.GetString(_tempBufferName);
-                    if (_tempBufferNameString.Equals("UnnamedPlayer"))
-                    {
-                        Application.Exit();
-                    }
-
                     if (godmodeAllCheck.Checked | godmodCheck.Checked)
                     {
                         if (godmodCheck.Checked)
